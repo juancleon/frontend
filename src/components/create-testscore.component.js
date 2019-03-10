@@ -1,4 +1,5 @@
 import React, {Component } from 'react';
+import axios from 'axios';
 
 export default class CreateTestScore extends Component {
 
@@ -6,12 +7,14 @@ export default class CreateTestScore extends Component {
       super(props);
 
       this.onChangeTestType = this.onChangeTestType.bind(this);//left off here
-      this.onChangeScore = this.onChangeScore.bind(this);
+      this.onChangeMathScore = this.onChangeMathScore.bind(this);
+      this.onChangeVerbalScore = this.onChangeVerbalScore.bind(this);
       this.onSubmit = this.onSubmit.bind(this);
 
       this.state = {
           testType: '',
-          score: ''
+          mathScore: '',
+          verbalScore: ''
       }
   }
 
@@ -21,9 +24,15 @@ export default class CreateTestScore extends Component {
       });
   }
 
-  onChangeScore(e){
+  onChangeMathScore(e){
       this.setState({
-          score: e.target.value
+          mathScore: e.target.value
+      });
+  }
+
+  onChangeVerbalScore(e){
+      this.setState({
+          verbalScore: e.target.value
       });
   }
 
@@ -32,11 +41,22 @@ export default class CreateTestScore extends Component {
 
       console.log(`Form submitted:`);
       console.log(`Test Type: ${this.state.testType}`);
-      console.log(`Score: ${this.state.score}`);
+      console.log(`Math Score: ${this.state.mathScore}`);
+      console.log(`Verbal Score: ${this.state.verbalScore}`);
+
+      const newTestScore = {
+          testType: this.state.testType,
+          mathScore: this.state.mathScore,
+          verbalScore: this.state.verbalScore
+      }
+
+      axios.post('http://localhost:4000/project/testScores/add', newTestScore)
+          .then(res => console.log(res.data));
 
       this.setState({
         testType: '',
-        score: ''
+        mathScore: '',
+        verbalScore: ''
       })
   }
 
@@ -53,21 +73,28 @@ export default class CreateTestScore extends Component {
                              onChange={this.onChangeTestType}
                              />
                  </div>
-                 </form>
-                 <h3>Create Test Score</h3>
-                 <form onSubmit={this.onSubmit}>
+                 <h3>Create Math Test Score</h3>
                     <div className = "form-group">
-                         <label> Score: </label>
+                         <label> Math Score: </label>
                          <input type="text"
                                 className="form-control"
-                                value={this.state.score}
-                                onChange={this.onChangeScore}
+                                value={this.state.mathScore}
+                                onChange={this.onChangeMathScore}
                                 />
                     </div>
+                    <h3>Create Verbal Test Score</h3>
+                       <div className = "form-group">
+                            <label> Verbal Score: </label>
+                            <input type="text"
+                                   className="form-control"
+                                   value={this.state.verbalScore}
+                                   onChange={this.onChangeVerbalScore }
+                                   />
+                       </div>
                     <div className="form-group">
                         <input type="submit" value="Create Test Score" className="btn btn-primary" />
                     </div>
-                 </form>
+                </form>
           </div>
       )
   }

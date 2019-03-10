@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react';//run development server with "npm start"
 import "bootstrap/dist/css/bootstrap.min.css";//npm install bootstrap
 import {BrowserRouter as Router, Route, Link} from "react-router-dom";//npm install react-router-dom
-
 import Applications from "./components/applications.component";
 import CreateApplication from "./components/create-application.component";
 import CreateTestScore from "./components/create-testscore.component";
@@ -10,7 +9,7 @@ import EditTestScore from "./components/edit-testscore.component";
 import SchoolRecommenderSearchResults from "./components/school-recommender-search-results.component";
 import SchoolRecommender from "./components/school-recommender.component";
 import TestScores from "./components/testscores.component";
-
+//npm install axios
 
 {/*import CreateTodo from "./components/create-todo.component";
 import EditTodo from "./components/edit-todo.component";

@@ -1,4 +1,5 @@
 import React, {Component } from 'react';
+import axios from 'axios';
 
 export default class CreateApplication extends Component {
 
@@ -33,6 +34,14 @@ export default class CreateApplication extends Component {
       console.log(`Form submitted:`);
       console.log(`School: ${this.state.school}`);
       console.log(`Status: ${this.state.status}`);
+
+      const newApplication = {
+          school: this.state.school,
+          status: this.state.status
+      }
+
+      axios.post('http://localhost:4000/project/applications/add', newApplication)
+          .then(res => console.log(res.data));
 
       this.setState({
         school: '',
