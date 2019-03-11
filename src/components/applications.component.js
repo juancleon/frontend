@@ -15,10 +15,13 @@ export default class Applications extends Component {
 
     constructor(props) {
         super (props);
-        this.state = {applications: []};
+        this.state = {applications: [],
+          _isMounted: false
+        }
     }
 
     componentDidMount() {
+       this._isMounted = true;
         axios.get('http://localhost:4000/project/applications')
             .then(response => {
                 this.setState({applications: response.data});
@@ -27,6 +30,22 @@ export default class Applications extends Component {
                 console.log(error);
             })
     }
+
+  componentWillUnmount(){
+    this._isMounted = false;
+  }
+
+  componentDidUpdate() {
+    axios.get('http://localhost:4000/project/applications')
+      .then(res => {
+          if(this._isMounted) {
+          this.setState({applications: res.data});
+        }
+      })
+      .catch( error => {
+        console.log(error);
+      });
+  }
 
     applicationList() {
         return this.state.applications.map(function(currentApplication, i) {
@@ -47,7 +66,7 @@ export default class Applications extends Component {
                         </tr>
                     </thead>
                     <tbody>
-                        { this.applicationList() }
+                        {this.applicationList()}
                     </tbody>
                 </table>
             </div>
