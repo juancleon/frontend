@@ -1,5 +1,5 @@
 import React, {Component } from 'react';
-
+import axios from 'axios';
 export default class EditTestScore extends Component {
 
   constructor(props){
@@ -64,9 +64,40 @@ export default class EditTestScore extends Component {
 
   render() {
       return (
-          <div>
-              <p>Welcome to the  Edit Test Score Component!</p>
-          </div>
+        <div style = {{marginTop: 20}}>
+            <h3>Update Test Type</h3>
+            <form onSubmit={this.onSubmit}>
+               <div className = "form-group">
+                    <label> Test: </label>
+                    <input type="text"
+                           className="form-control"
+                           value={this.state.testType}
+                           onChange={this.onChangeTestType}
+                           />
+               </div>
+               <h3>Update Math Test Score</h3>
+                  <div className = "form-group">
+                       <label> Math Score: </label>
+                       <input type="text"
+                              className="form-control"
+                              value={this.state.mathScore}
+                              onChange={this.onChangeMathScore}
+                              />
+                  </div>
+                  <h3>Update Verbal Test Score</h3>
+                     <div className = "form-group">
+                          <label> Verbal Score: </label>
+                          <input type="text"
+                                 className="form-control"
+                                 value={this.state.verbalScore}
+                                 onChange={this.onChangeVerbalScore }
+                                 />
+                     </div>
+                  <div className="form-group">
+                      <input type="submit" value="Update Test Score" className="btn btn-primary" />
+                  </div>
+              </form>
+        </div>
       )
   }
 }
