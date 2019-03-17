@@ -10,16 +10,21 @@ const TestScore = props => (
         <td>
             <Link to={"/editTestScore/"+props.testScore._id}>Edit</Link>
         </td>
+        <td>
+            <Link to={"/deleteTestScore/"+props.testScore._id}>Delete</Link>
+        </td>
     </tr>
 )
 
 export default class TestScores extends Component {
   constructor(props) {
       super (props);
-      this.state = {testScores: []};
+      this.state = {testScores: [],
+        _isMounted: false}
   }
 
   componentDidMount() {
+      this._isMounted = true;
       axios.get('http://localhost:4000/project/testScores')
           .then(response => {
               this.setState({testScores: response.data});
@@ -27,6 +32,22 @@ export default class TestScores extends Component {
           .catch(function (error) {
               console.log(error);
           })
+  }
+
+  componentWillUnmount(){
+    this._isMounted = false;
+  }
+
+  componentDidUpdate() {
+    axios.get('http://localhost:4000/project/testScores')
+      .then(res => {
+          if(this._isMounted) {
+          this.setState({testScores: res.data});
+        }
+      })
+      .catch( error => {
+        console.log(error);
+      });
   }
 
   testScoreList() {
@@ -48,7 +69,7 @@ export default class TestScores extends Component {
                   </tr>
               </thead>
               <tbody>
-                  { this.testScoreList() }
+                  {this.testScoreList()}
               </tbody>
           </table>
           </div>
