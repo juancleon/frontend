@@ -16,7 +16,7 @@ export default class EditApplication extends Component {
   }
 
   componentDidMount(){
-      axios.get('http://localhost:4000/project/applications/'+this.props.match.params.id)
+      axios.get('http://localhost:4000/applications/'+this.props.match.params.id)
           .then(response => {
               this.setState({
                   school: response.data.school,
@@ -46,7 +46,7 @@ export default class EditApplication extends Component {
           school: this.state.school,
           status: this.state.status
       };
-      axios.post('http://localhost:4000/project/applications/update/' + this.props.match.params.id, obj)
+      axios.post('http://localhost:4000/applications/update/' + this.props.match.params.id, obj)
           .then(res => console.log(res.data));
       this.props.history.push('/applications');
   }

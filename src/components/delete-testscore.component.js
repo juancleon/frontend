@@ -15,7 +15,7 @@ export default class DeleteTestScore extends Component {
   }
 
   componentDidMount(){
-      axios.get('http://localhost:4000/project/testScores/'+this.props.match.params.id)
+      axios.get('http://localhost:4000/testScores/'+this.props.match.params.id)
           .then(response => {
               this.setState({
                 testType: response.data.testType,
@@ -30,7 +30,7 @@ export default class DeleteTestScore extends Component {
 
   delete(e) {
       e.preventDefault();
-      axios.delete('http://localhost:4000/project/testScores/delete/' + this.props.match.params.id)
+      axios.delete('http://localhost:4000/testScores/delete/' + this.props.match.params.id)
           .then(res => console.log(res.data));
       this.props.history.push('/testScores');
   }

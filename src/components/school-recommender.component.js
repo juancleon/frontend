@@ -1,7 +1,7 @@
 import React, {Component } from 'react';
 import { withRouter } from "react-router";
 import SchoolRecommenderSearchResults from "./school-recommender-search-results.component";
-const Bundle = withRouter(SchoolRecommenderSearchResults);
+withRouter(SchoolRecommenderSearchResults);
 
 export default class SchoolRecommender extends Component {
   constructor(props){

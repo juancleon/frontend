@@ -40,7 +40,7 @@ export default class CreateApplication extends Component {
           status: this.state.status
       }
 
-      axios.post('http://localhost:4000/project/applications/add', newApplication)
+      axios.post('http://localhost:4000/applications/add', newApplication)
           .then(res => console.log(res.data));
 
       this.setState({

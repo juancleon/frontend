@@ -50,7 +50,7 @@ export default class CreateTestScore extends Component {
           verbalScore: this.state.verbalScore
       }
 
-      axios.post('http://localhost:4000/project/testScores/add', newTestScore)
+      axios.post('http://localhost:4000/testScores/add', newTestScore)
           .then(res => console.log(res.data));
 
       this.setState({

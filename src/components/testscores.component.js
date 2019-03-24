@@ -8,10 +8,10 @@ const TestScore = props => (
         <td>{props.testScore.mathScore} </td>
         <td>{props.testScore.verbalScore} </td>
         <td>
-            <Link to={"/editTestScore/"+props.testScore._id}>Edit</Link>
+            <Link to={'/editTestScore/'+props.testScore._id}>Edit</Link>
         </td>
         <td>
-            <Link to={"/deleteTestScore/"+props.testScore._id}>Delete</Link>
+            <Link to={'/deleteTestScore/'+props.testScore._id}>Delete</Link>
         </td>
     </tr>
 )
@@ -25,7 +25,7 @@ export default class TestScores extends Component {
 
   componentDidMount() {
       this._isMounted = true;
-      axios.get('http://localhost:4000/project/testScores')
+      axios.get('http://localhost:4000/testScores')
           .then(response => {
               this.setState({testScores: response.data});
           })
@@ -39,7 +39,7 @@ export default class TestScores extends Component {
   }
 
   componentDidUpdate() {
-    axios.get('http://localhost:4000/project/testScores')
+    axios.get('http://localhost:4000/testScores')
       .then(res => {
           if(this._isMounted) {
           this.setState({testScores: res.data});

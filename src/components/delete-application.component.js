@@ -14,7 +14,7 @@ export default class DeleteApplication extends Component {
   }
 
   componentDidMount(){
-      axios.get('http://localhost:4000/project/applications/'+this.props.match.params.id)
+      axios.get('http://localhost:4000/applications/'+this.props.match.params.id)
           .then(response => {
               this.setState({
                   school: response.data.school,
@@ -28,7 +28,7 @@ export default class DeleteApplication extends Component {
 
   delete(e) {
       e.preventDefault();
-      axios.delete('http://localhost:4000/project/applications/delete/' + this.props.match.params.id)
+      axios.delete('http://localhost:4000/applications/delete/' + this.props.match.params.id)
           .then(res => console.log(res.data));
       this.props.history.push('/applications');
   }

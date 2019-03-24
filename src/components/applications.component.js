@@ -26,7 +26,7 @@ export default class Applications extends Component {
 
   componentDidMount() {
         this._isMounted = true;
-        axios.get('http://localhost:4000/project/applications')
+        axios.get('http://localhost:4000/applications')
             .then(response => {
                 this.setState({applications: response.data});
             })
@@ -40,7 +40,7 @@ export default class Applications extends Component {
   }
 
   componentDidUpdate() {
-    axios.get('http://localhost:4000/project/applications')
+    axios.get('http://localhost:4000/applications')
       .then(res => {
           if(this._isMounted) {
           this.setState({applications: res.data});

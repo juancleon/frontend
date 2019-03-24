@@ -18,7 +18,7 @@ export default class EditTestScore extends Component {
   }
 
   componentDidMount(){
-      axios.get('http://localhost:4000/project/testScores/'+this.props.match.params.id)
+      axios.get('http://localhost:4000/testScores/'+this.props.match.params.id)
           .then(response => {
               this.setState({
                   testType: response.data.testType,
@@ -56,7 +56,7 @@ export default class EditTestScore extends Component {
           mathScore: this.state.mathScore,
           verbalScore: this.state.verbalScore
       };
-      axios.post('http://localhost:4000/project/testScores/update/' + this.props.match.params.id, obj)
+      axios.post('http://localhost:4000/testScores/update/' + this.props.match.params.id, obj)
           .then(res => console.log(res.data));
       this.props.history.push('/testScores');
   }
