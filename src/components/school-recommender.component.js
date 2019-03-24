@@ -1,5 +1,7 @@
 import React, {Component } from 'react';
-import axios from 'axios';
+import { withRouter } from "react-router";
+import SchoolRecommenderSearchResults from "./school-recommender-search-results.component";
+const Bundle = withRouter(SchoolRecommenderSearchResults);
 
 export default class SchoolRecommender extends Component {
   constructor(props){
@@ -35,7 +37,7 @@ export default class SchoolRecommender extends Component {
       });
   }
 
-  onSubmit(e){
+  onSubmit(e) {
       e.preventDefault();
 
       console.log(`Search criteria submitted:`);
@@ -43,21 +45,19 @@ export default class SchoolRecommender extends Component {
       console.log(`Cost of Living: ${this.state.costOfLiving}`);
       console.log(`Program of Interest: ${this.state.programOfInterest}`);
 
-      const searchCriteria = {
-          zipCode: this.state.zipCode,
-          costOfLiving: this.state.costOfLiving,
-          programOfInterest: this.state.programOfInterest
-      }
-
-      axios.get('http://localhost:4000/project/SchoolRecommender', searchCriteria)
-          .then(res => console.log(res.data));
+      this.props.history.push ({
+        pathname: '/searchResults',
+        state: {zipCode: this.state.zipCode,
+                costOfLiving: this.state.costOfLiving,
+                programOfInterest: this.state.programOfInterest
+        }
+      })
 
       this.setState({
         zipCode: '',
         costOfLiving: '',
         programOfInterest: ''
-      })
-      this.props.history.push('/searchResults');
+      });
   }
 
   render() {
@@ -92,21 +92,10 @@ export default class SchoolRecommender extends Component {
                                  />
                      </div>
                   <div className="form-group">
-                      <input type="submit" value="Enter Search Criteria" className="btn btn-primary" />
+                      <input type="submit" value="Search" className="btn btn-primary" />
                   </div>
               </form>
         </div>
-          {/*User enters:
-                        + Zip Code
-                        + Cost of Living Index (desired)
-                        + Program of Interest
-            System returns:
-                        + Name of School
-                        + School URL
-                        + Zip Code
-                        + Cost of Living Index (actual)
-                        + Program(s) of Interest
-          */}
       )
   }
 }
