@@ -22,12 +22,8 @@ export default class SchoolRecommenderSearchResults extends Component {
 
   componentDidMount() {
         this._isMounted = true;
-        const obj = {
-            zipCode: this.props.location.state.zipCode,
-            costOfLiving: this.props.location.state.costOfLiving,
-            programOfInterest: this.props.location.state.programOfInterest,
-        };
-        axios.get('http://localhost:4000/searchSchools', obj)
+
+        axios.get('http://localhost:4000/searchSchools/'+ this.props.location.state.zipCode + '/' + this.props.location.state.costOfLiving + '/' + this.props.location.state.programOfInterest)
             .then(response => {
                 this.setState({schools: response.data});
             })
@@ -41,12 +37,7 @@ export default class SchoolRecommenderSearchResults extends Component {
     }
 
     componentDidUpdate() {
-      const obj = {
-          zipCode: this.props.location.state.zipCode,
-          costOfLiving: this.props.location.state.costOfLiving,
-          programOfInterest: this.props.location.state.programOfInterest,
-      };
-      axios.get('http://localhost:4000/searchSchools', obj)
+        axios.get('http://localhost:4000/searchSchools/'+ this.props.location.state.zipCode + '/' + this.props.location.state.costOfLiving + '/' + this.props.location.state.programOfInterest)
         .then(res => {
             if(this._isMounted) {
             this.setState({schools: res.data});
