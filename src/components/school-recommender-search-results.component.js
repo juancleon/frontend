@@ -7,7 +7,7 @@ const School = props => (
         <td>{props.school.name} </td>
         <Link to={props.school.schoolUrl}></Link>
         <td>{props.school.zipCode} </td>
-        <td>{props.school.costOfLiving} </td>
+        <td>{props.school.costOfLivingIndex} </td>
         <td>{props.school.programsOffered} </td>
     </tr>
 )
@@ -23,7 +23,7 @@ export default class SchoolRecommenderSearchResults extends Component {
   componentDidMount() {
         this._isMounted = true;
 
-        axios.get('http://localhost:4000/searchSchools/'+ this.props.location.state.zipCode + '/' + this.props.location.state.costOfLiving + '/' + this.props.location.state.programOfInterest)
+        axios.get('http://localhost:4000/searchSchools/'+ this.props.location.state.zipCode + '/' + this.props.location.state.costOfLivingIndex + '/' + this.props.location.state.programOfInterest)
             .then(response => {
                 this.setState({schools: response.data});
             })
@@ -37,7 +37,7 @@ export default class SchoolRecommenderSearchResults extends Component {
     }
 
     componentDidUpdate() {
-        axios.get('http://localhost:4000/searchSchools/'+ this.props.location.state.zipCode + '/' + this.props.location.state.costOfLiving + '/' + this.props.location.state.programOfInterest)
+        axios.get('http://localhost:4000/searchSchools/'+ this.props.location.state.zipCode + '/' + this.props.location.state.costOfLivingIndex + '/' + this.props.location.state.programOfInterest)
         .then(res => {
             if(this._isMounted) {
             this.setState({schools: res.data});
@@ -64,7 +64,7 @@ render() {
                       <th>School Name</th>
                       <th>Website</th>
                       <th>Zip Code</th>
-                      <th>Cost of Living</th>
+                      <th>Cost of Living Index</th>
                       <th>Program(s) Offered</th>
                   </tr>
               </thead>

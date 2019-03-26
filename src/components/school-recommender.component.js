@@ -8,13 +8,13 @@ export default class SchoolRecommender extends Component {
       super(props);
 
       this.onChangeZipCode = this.onChangeZipCode.bind(this);
-      this.onChangeCostOfLiving = this.onChangeCostOfLiving.bind(this);
+      this.onChangeCostOfLivingIndex = this.onChangeCostOfLivingIndex.bind(this);
       this.onChangeProgramOfInterest = this.onChangeProgramOfInterest.bind(this);
       this.onSubmit = this.onSubmit.bind(this);
 
       this.state = {
           zipCode: '',
-          costOfLiving: '',
+          costOfLivingIndex: '',
           programOfInterest: ''
       }
   }
@@ -25,9 +25,9 @@ export default class SchoolRecommender extends Component {
       });
   }
 
-  onChangeCostOfLiving(e){
+  onChangeCostOfLivingIndex(e){
       this.setState({
-          costOfLiving: e.target.value
+          costOfLivingIndex: e.target.value
       });
   }
 
@@ -42,20 +42,20 @@ export default class SchoolRecommender extends Component {
 
       console.log(`Search criteria submitted:`);
       console.log(`Zip Code: ${this.state.zipCode}`);
-      console.log(`Cost of Living: ${this.state.costOfLiving}`);
+      console.log(`Cost of Living: ${this.state.costOfLivingIndex}`);
       console.log(`Program of Interest: ${this.state.programOfInterest}`);
 
       this.props.history.push ({
         pathname: '/searchResults',
         state: {zipCode: this.state.zipCode,
-                costOfLiving: this.state.costOfLiving,
+                costOfLivingIndex: this.state.costOfLivingIndex,
                 programOfInterest: this.state.programOfInterest
         }
       })
 
       this.setState({
         zipCode: '',
-        costOfLiving: '',
+        costOfLivingIndex: '',
         programOfInterest: ''
       });
   }
@@ -78,8 +78,8 @@ export default class SchoolRecommender extends Component {
                        <label> U.S. Average is 100 </label>
                        <input type="number"
                               className="form-control"
-                              value={this.state.costOfLiving}
-                              onChange={this.onChangeCostOfLiving}
+                              value={this.state.costOfLivingIndex}
+                              onChange={this.onChangeCostOfLivingIndex}
                               />
                   </div>
                   <h3>What Academic Program(s) are You Interested In?</h3>
