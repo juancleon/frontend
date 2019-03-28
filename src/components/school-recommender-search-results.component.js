@@ -4,11 +4,13 @@ import axios from 'axios';
 
 const School = props => (
     <tr>
-        <td>{props.school.name} </td>
-        <Link to={props.school.schoolUrl}></Link>
-        <td>{props.school.zipCode} </td>
-        <td>{props.school.costOfLivingIndex} </td>
-        <td>{props.school.programsOffered} </td>
+        <td>{props.school.name}</td>
+        <td>
+            <a href={props.school.schoolURL} target="_blank">{props.school.schoolURL}</a>
+        </td>
+        <td>{props.school.zipCode}</td>
+        <td>{props.school.costOfLivingIndex}</td>
+        <td>{props.school.programsOfferedArray}</td>
     </tr>
 )
 
@@ -35,7 +37,7 @@ export default class SchoolRecommenderSearchResults extends Component {
     componentWillUnmount(){
       this._isMounted = false;
     }
-
+/*
     componentDidUpdate() {
         axios.get('http://localhost:4000/searchSchools/'+ this.props.location.state.zipCode + '/' + this.props.location.state.costOfLivingIndex + '/' + this.props.location.state.programOfInterest)
         .then(res => {
@@ -47,7 +49,7 @@ export default class SchoolRecommenderSearchResults extends Component {
           console.log(error);
         });
     }
-
+*/
     schoolList() {
         return this.state.schools.map(function(currentSchool, i) {
             return <School school={currentSchool} key ={i} />;
