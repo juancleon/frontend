@@ -13,9 +13,9 @@ export default class SchoolRecommender extends Component {
       this.onSubmit = this.onSubmit.bind(this);
 
       this.state = {
-          zipCode: '',
-          costOfLivingIndex: '',
-          programOfInterest: ''
+          zipCode: '\xa0',
+          costOfLivingIndex: '\xa0',
+          programOfInterest: null
       }
   }
 
