@@ -6,7 +6,7 @@ export default class CreateTestScore extends Component {
   constructor(props){
       super(props);
 
-      this.onChangeTestType = this.onChangeTestType.bind(this);//left off here
+      this.onChangeTestType = this.onChangeTestType.bind(this);
       this.onChangeMathScore = this.onChangeMathScore.bind(this);
       this.onChangeVerbalScore = this.onChangeVerbalScore.bind(this);
       this.onSubmit = this.onSubmit.bind(this);
@@ -49,9 +49,11 @@ export default class CreateTestScore extends Component {
           mathScore: this.state.mathScore,
           verbalScore: this.state.verbalScore
       }
-
-      axios.post('http://localhost:4000/testScores/add', newTestScore)
-          .then(res => console.log(res.data));
+      if ((0 <= this.state.mathScore) && (this.state.mathScore <= 1600) && (0 <= this.state.verbalScore) && (this.state.verbalScore <= 1600))
+      {
+        axios.post('http://localhost:4000/testScores/add', newTestScore)
+            .then(res => console.log(res.data));
+      }
 
       this.setState({
         testType: '',
@@ -76,8 +78,9 @@ export default class CreateTestScore extends Component {
                  <h3>Create Math Test Score</h3>
                     <div className = "form-group">
                          <label> Math Score: </label>
-                         <input type="text"
+                         <input type="number"
                                 className="form-control"
+                                placeholder="Please enter a number between 0 - 1600"
                                 value={this.state.mathScore}
                                 onChange={this.onChangeMathScore}
                                 />
@@ -85,8 +88,9 @@ export default class CreateTestScore extends Component {
                     <h3>Create Verbal Test Score</h3>
                        <div className = "form-group">
                             <label> Verbal Score: </label>
-                            <input type="text"
+                            <input type="number"
                                    className="form-control"
+                                   placeholder="Please enter a number between 0 - 1600"
                                    value={this.state.verbalScore}
                                    onChange={this.onChangeVerbalScore }
                                    />
