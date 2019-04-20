@@ -1,5 +1,4 @@
 import React, {Component } from 'react';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 const School = props => (
@@ -10,6 +9,7 @@ const School = props => (
         </td>
         <td>{props.school.zipCode}</td>
         <td>{props.school.costOfLivingIndex}</td>
+        <td>{props.school.state}</td>
         <td>{props.school.programsOfferedArray}</td>
     </tr>
 )
@@ -37,19 +37,7 @@ export default class SchoolRecommenderSearchResults extends Component {
     componentWillUnmount(){
       this._isMounted = false;
     }
-/*
-    componentDidUpdate() {
-        axios.get('http://localhost:4000/searchSchools/'+ this.props.location.state.zipCode + '/' + this.props.location.state.costOfLivingIndex + '/' + this.props.location.state.programOfInterest)
-        .then(res => {
-            if(this._isMounted) {
-            this.setState({schools: res.data});
-          }
-        })
-        .catch( error => {
-          console.log(error);
-        });
-    }
-*/
+
     schoolList() {
         return this.state.schools.map(function(currentSchool, i) {
             return <School school={currentSchool} key ={i} />;
@@ -67,6 +55,7 @@ render() {
                       <th>Website</th>
                       <th>Zip Code</th>
                       <th>Cost of Living Index</th>
+                      <th>State</th>
                       <th>Program(s) Offered</th>
                   </tr>
               </thead>
