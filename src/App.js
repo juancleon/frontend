@@ -11,6 +11,7 @@ import EditTestScore from "./components/edit-testscore.component";
 import DeleteTestScore from "./components/delete-testscore.component";
 import SchoolRecommenderSearchResults from "./components/school-recommender-search-results.component";
 import SchoolRecommender from "./components/school-recommender.component";
+import SavedSearches from "./components/saved-searches.component";
 
 //npm install axios
 
@@ -48,6 +49,9 @@ class App extends Component {
                 <li className = "navbar-item">
                   <Link to ="/createTestScore" className = "nav-link">Create Test Score</Link>
                 </li>
+                <li className = "navbar-item">
+                  <Link to ="/savedSearches" className = "nav-link">Saved Searches</Link>
+                </li>
               </ul>
             </div>
           </nav>
@@ -67,6 +71,7 @@ class App extends Component {
           <Route path="/deleteTestScore/:id" component={DeleteTestScore} />
           <Route path="/" exact component={SchoolRecommender} />
           <Route path="/searchResults" component={SchoolRecommenderSearchResults} />
+          <Route path="/savedSearches" component={SavedSearches} />
         </div>
       </Router>
     );
