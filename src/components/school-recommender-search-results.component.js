@@ -12,12 +12,20 @@ const School = props => (
         <td>{props.school.state}</td>
         <td>{props.school.programsOfferedArray}</td>
     </tr>
+
 )
 
 export default class SchoolRecommenderSearchResults extends Component {
   constructor(props) {
       super (props);
-      this.state = {schools: [],
+
+      this.onSubmit = this.onSubmit.bind(this);
+
+      this.state = {
+        zipCode: '',
+        costOfLivingIndex: '',
+        programOfInterest: '',
+        schools: [],
         _isMounted: false
       }
   }
@@ -44,20 +52,50 @@ export default class SchoolRecommenderSearchResults extends Component {
         });
     }
 
+    onSubmit(e) {
+        e.preventDefault();
+
+        const newSchoolRecommenderSearchResult = {
+                  zipCode: this.props.location.state.zipCode,
+                  costOfLivingIndex: this.props.location.state.costOfLivingIndex,
+                  programOfInterest: this.props.location.state.programOfInterest,
+                  schools: this.state.schools
+        }
+
+        axios.post('http://localhost:4000/savedSearches/add', newSchoolRecommenderSearchResult)
+            .then(res => console.log(res.data));
+
+        this.setState({
+          zipCode: '',
+          costOfLivingIndex: '',
+          programOfInterest: '',
+          schools: []
+        });
+        alert('Your search was saved successfully.');
+        //this.props.history.push('/savedSearches');
+
+    }
+
 render() {
   return (
       <div>
-          <h3>Search Results</h3>
+          <h3>Search Results
+          <form onSubmit={this.onSubmit}>
+              <div className="form-group">
+                  <input type="submit" value="Save Search" className="btn btn-primary" />
+              </div>
+          </form>
+          </h3>
           <table className="table table-striped" style={{marginTop: 20}}>
               <thead>
-                  <tr>
-                      <th>School Name</th>
-                      <th>Website</th>
-                      <th>Zip Code</th>
-                      <th>Cost of Living Index</th>
-                      <th>State</th>
-                      <th>Program(s) Offered</th>
-                  </tr>
+                <tr>
+                    <th>School Name</th>
+                    <th>Website</th>
+                    <th>Zip Code</th>
+                    <th>Cost of Living Index</th>
+                    <th>State</th>
+                    <th>Program(s) Offered</th>
+                </tr>
               </thead>
               <tbody>
                   {this.schoolList()}
