@@ -63,9 +63,12 @@ export default class Register extends Component {
               console.log(error)
           })
 
-      if (isUserNameTaken){
+      if (this.state.isUserNameTaken){
+          alert('The User Name entered is not available. Please select another User Name. ');
+          }
+      else if (this.state.eMail.isEmpty()){
 
-              }
+      }
 
       else{
           const newUser = {
