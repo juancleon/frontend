@@ -53,17 +53,16 @@ export default class CreateTestScore extends Component {
       {
         axios.post('http://localhost:4000/testScores/add', newTestScore)
             .then(res => console.log(res.data));
+            this.setState({
+              testType: '',
+              mathScore: '',
+              verbalScore: ''
+            })
       }
       else{
-        alert('One of the test scores entered was outside of the valid range. Please re-enter the scores.');
+          alert('One of the test scores entered was outside of the valid range. Please re-enter the score(s).');
       }
-
-      this.setState({
-        testType: '',
-        mathScore: '',
-        verbalScore: ''
-      })
-  }
+}
 
   render() {
       return (
