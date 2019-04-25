@@ -7,17 +7,17 @@ export default class Register extends Component {
       super(props);
 
       this.onChangeUserName = this.onChangeUserName.bind(this);
-      this.onChangePassword1 = this.onChangePassword1.bind(this);
-      this.onChangePassword2 = this.onChangePassword2.bind(this);
+      this.onChangeFirstPassword = this.onChangeFirstPassword.bind(this);
+      this.onChangeSecondPassword = this.onChangeSecondPassword.bind(this);
       this.onChangeEMail = this.onChangeEMail.bind(this);
       this.onSubmit = this.onSubmit.bind(this);
 
       this.state = {
           userName: '',
-          password1: '',
-          password2: '',
+          firstPassword: '',
+          secondPassword: '',
           eMail: '',
-          isUserNameTaken: false
+          isUserNameTaken: 'false'
       }
   }
 
@@ -27,15 +27,15 @@ export default class Register extends Component {
       });
   }
 
-  onChangePassWord1(e){
+  onChangeFirstPassword(e){
       this.setState({
-          password1: e.target.value
+          firstPassword: e.target.value
       });
   }
 
-  onChangePassWord2(e){
+  onChangeSecondPassword(e){
       this.setState({
-          password2: e.target.value
+          secondPassword: e.target.value
       });
   }
 
@@ -50,43 +50,78 @@ export default class Register extends Component {
 
       console.log(`Form submitted:`);
       console.log(`UserName: ${this.state.userName}`);
-      console.log(`Password1: ${this.state.password1}`);
+      console.log(`Password1: ${this.state.firstPassword}`);
       console.log(`eMail: ${this.state.eMail}`);
+      console.log(`Before axios: ${this.state.isUserNameTaken}`);
 
       axios.get('http://localhost:4000/lookForUser/' + this.state.userName)
-          .then(response => {
+        .then(response => {
               this.setState({
-                  isUserNameTaken: response.data,
+                  isUserNameTaken: 'true'
               })
+              console.log(`Inside axios: ${this.state.isUserNameTaken}`)
           })
           .catch(function(error){
               console.log(error)
           })
 
       if (this.state.isUserNameTaken){
-          alert('The User Name entered is not available. Please select another User Name. ');
-          }
-      else if (this.state.eMail.isEmpty()){
+          this.setState({
+              userName: '',
+              isUserNameTaken: false
+          });
+          alert('The User Name entered is not available. Please select a different User Name.');
+          console.log(`${this.state.userName}`);
+          console.log(`Inside first if: ${this.state.isUserNameTaken}`)
+      }
 
+      else if (this.state.userName === ""){//check if User Name field is empty
+          alert('The User Name field is required.');
+      }
+
+      else if (this.state.firstPassword === ""){//check if Password field is empty
+          alert('The Password field is required.');
+      }
+
+      else if (this.state.secondPassword === ""){//check if Confirm Password field is empty
+          alert('The Confirm Password field is required.');
+      }
+
+      else if (this.state.eMail === ""){//check if E-mail field is empty
+          alert('The E-mail field is required.');
+      }
+
+      else if (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.state.eMail))){//check if E-mail format is valid
+          alert('Email is invalid.');
+      }
+
+      else if (!((6 <= (this.state.firstPassword).length) && ((this.state.firstPassword).length) <= 30)){
+          alert('The Password entered is the wrong length.');
+      }
+
+      else if (this.state.firstPassword !== this.state.secondPassword){
+          alert('The Passwords entered do not match.');
       }
 
       else{
+        console.log(`'Hits final else: ${this.state.userName}`);
+
           const newUser = {
               userName: this.state.userName,
-              password1: this.state.password1,
+              password: this.state.firstPassword,
               eMail: this.state.eMail
           }
 
           axios.post('http://localhost:4000/user/register', newUser)
                   .then(res => console.log(res.data));
+
+          this.setState({
+            userName: '',
+            firstPassword: '',
+            secondPassword: '',
+            eMail: ''
+          })
       }
-      this.setState({
-        userName: '',
-        password1: '',
-        password2: '',
-        eMail: '',
-        isUserNameTaken: false
-      })
   }
 
   render() {
@@ -104,21 +139,21 @@ export default class Register extends Component {
                              />
                   </div>
                   <div className = "form-group">
-                       <label>Password:</label>
-                       <input type="text"
+                       <label>Enter Password:</label>
+                       <input type="text"//change to "password" to mask text
                               className="form-control"
                               placeholder="Please enter a password"
-                              value={this.state.password1}
-                              onChange={this.onChangePassWord1}
+                              value={this.state.firstPassword}
+                              onChange={this.onChangeFirstPassword}
                               />
                    </div>
                    <div className = "form-group">
-                        <label>Password:</label>
+                        <label>Confirm Password:</label>
                         <input type="text"
                                className="form-control"
                                placeholder="Please re-enter the same password"
-                               value={this.state.password2}
-                               onChange={this.onChangePassWord2}
+                               value={this.state.secondPassword}
+                               onChange={this.onChangeSecondPassword}
                                />
                     </div>
                     <div className = "form-group">
