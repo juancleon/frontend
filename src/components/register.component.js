@@ -54,7 +54,7 @@ export default class Register extends Component {
       console.log(`eMail: ${this.state.eMail}`);
       console.log(`Before axios: ${this.state.isUserNameTaken}`);
 
-      axios.get('http://localhost:4000/lookForUser/' + this.state.userName)
+    /*  axios.get('http://localhost:4000/lookForUser/' + this.state.userName)
         .then(response => {
               this.setState({
                   isUserNameTaken: 'true'
@@ -73,9 +73,9 @@ export default class Register extends Component {
           alert('The User Name entered is not available. Please select a different User Name.');
           console.log(`${this.state.userName}`);
           console.log(`Inside first if: ${this.state.isUserNameTaken}`)
-      }
+      }*/
 
-      else if (this.state.userName === ""){//check if User Name field is empty
+      if (this.state.userName === ""){//check if User Name field is empty
           alert('The User Name field is required.');
       }
 
@@ -113,14 +113,23 @@ export default class Register extends Component {
           }
 
           axios.post('http://localhost:4000/user/register', newUser)
-                  .then(res => console.log(res.data));
-
-          this.setState({
-            userName: '',
-            firstPassword: '',
-            secondPassword: '',
-            eMail: ''
-          })
+                  .then(res => {
+                    console.log(res.data);
+                    if((res.data.json) === ('{User:"New user added successfully"}'))
+                    {
+                        this.setState({
+                          userName: '',
+                          firstPassword: '',
+                          secondPassword: '',
+                          eMail: ''
+                        })
+                    }
+                    else{
+                        this.setState({
+                          userName: ''
+                        });
+                    }
+                  });
       }
   }
 
