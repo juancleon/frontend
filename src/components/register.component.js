@@ -16,8 +16,7 @@ export default class Register extends Component {
           userName: '',
           firstPassword: '',
           secondPassword: '',
-          eMail: '',
-          isUserNameTaken: 'false'
+          eMail: ''
       }
   }
 
@@ -48,33 +47,6 @@ export default class Register extends Component {
   onSubmit(e){
       e.preventDefault();
 
-      console.log(`Form submitted:`);
-      console.log(`UserName: ${this.state.userName}`);
-      console.log(`Password1: ${this.state.firstPassword}`);
-      console.log(`eMail: ${this.state.eMail}`);
-      console.log(`Before axios: ${this.state.isUserNameTaken}`);
-
-    /*  axios.get('http://localhost:4000/lookForUser/' + this.state.userName)
-        .then(response => {
-              this.setState({
-                  isUserNameTaken: 'true'
-              })
-              console.log(`Inside axios: ${this.state.isUserNameTaken}`)
-          })
-          .catch(function(error){
-              console.log(error)
-          })
-
-      if (this.state.isUserNameTaken){
-          this.setState({
-              userName: '',
-              isUserNameTaken: false
-          });
-          alert('The User Name entered is not available. Please select a different User Name.');
-          console.log(`${this.state.userName}`);
-          console.log(`Inside first if: ${this.state.isUserNameTaken}`)
-      }*/
-
       if (this.state.userName === ""){//check if User Name field is empty
           alert('The User Name field is required.');
       }
@@ -93,19 +65,29 @@ export default class Register extends Component {
 
       else if (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.state.eMail))){//check if E-mail format is valid
           alert('Email is invalid.');
+          this.setState({
+            eMail: ''
+          });
       }
 
       else if (!((6 <= (this.state.firstPassword).length) && ((this.state.firstPassword).length) <= 30)){
           alert('The Password entered is the wrong length.');
+          this.setState({
+            firstPassword: '',
+            secondPassword: ''
+          });
       }
 
       else if (this.state.firstPassword !== this.state.secondPassword){
           alert('The Passwords entered do not match.');
+          this.setState({
+            firstPassword: '',
+            secondPassword: ''
+          });
       }
 
       else{
-        console.log(`'Hits final else: ${this.state.userName}`);
-
+  
           const newUser = {
               userName: this.state.userName,
               password: this.state.firstPassword,
@@ -114,23 +96,22 @@ export default class Register extends Component {
 
           axios.post('http://localhost:4000/user/register', newUser)
                   .then(res => {
-                    console.log(res.data);
-                    if((res.data.json) === ('{User:"New user added successfully"}'))
-                    {
-                        this.setState({
+                    console.log(res.data.status);
+                    this.setState({
                           userName: '',
                           firstPassword: '',
                           secondPassword: '',
                           eMail: ''
-                        })
-                    }
-                    else{
-                        this.setState({
-                          userName: ''
                         });
-                    }
-                  });
-      }
+                        alert('You have successfully registered.');
+                        this.props.history.push('/');
+                    }).catch(error => {
+                          this.setState({
+                            userName: ''
+                          });
+                          alert('The User Name selected is not available. Please select another.');
+                    });
+          }
   }
 
   render() {
@@ -158,7 +139,7 @@ export default class Register extends Component {
                    </div>
                    <div className = "form-group">
                         <label>Confirm Password:</label>
-                        <input type="text"
+                        <input type="text"//change to "password" to mask text
                                className="form-control"
                                placeholder="Please re-enter the same password"
                                value={this.state.secondPassword}
