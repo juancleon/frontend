@@ -1,4 +1,5 @@
 import React, {Component } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 export default class Login extends Component {
@@ -54,7 +55,7 @@ export default class Login extends Component {
 
                 if(this.state.userEnteredPassword === this.state.databasePassword)
                 {
-                    this.props.history.push('/');
+                    this.props.history.push('/SchoolRecommender');
                 }
                 else {
                     alert('The password entered is incorrect.');
@@ -75,6 +76,7 @@ export default class Login extends Component {
       return (
           <div style = {{marginTop: 20}}>
               <h3>User Name</h3>
+              <h6>Don't have an account? <Link to={"/register"}>Register</Link></h6>
               <form onSubmit={this.onSubmit}>
                  <div className = "form-group">
                       <label> Enter user name: </label>

@@ -1,6 +1,7 @@
 import React, {Component } from 'react';
 import { withRouter } from "react-router";
 import SchoolRecommenderSearchResults from "./school-recommender-search-results.component";
+import NavigationBar from "./navigationBar.component";
 withRouter(SchoolRecommenderSearchResults);
 
 export default class SchoolRecommender extends Component {
@@ -61,40 +62,43 @@ export default class SchoolRecommender extends Component {
   }
 
   render() {
-      return (
-        <div style = {{marginTop: 20}}>
+     return (
+       <div>
+       {<NavigationBar/>}
+            <div style = {{marginTop: 20}}>
             <h3>Where Would You Like to go to School?</h3>
-            <form onSubmit={this.onSubmit}>
-               <div className = "form-group">
-                    <label> Zip Code: </label>
-                    <input type="number"
-                           className="form-control"
-                           value={this.state.zipCode}
-                           onChange={this.onChangeZipCode}
-                           />
-               </div>
-               <h3>What Cost of Living Level Would You Prefer?</h3>
-                  <div className = "form-group">
-                       <label> U.S. Average is 100 </label>
-                       <input type="number"
-                              className="form-control"
-                              value={this.state.costOfLivingIndex}
-                              onChange={this.onChangeCostOfLivingIndex}
-                              />
-                  </div>
-                  <h3>What Academic Program(s) are You Interested In?</h3>
-                     <div className = "form-group">
-                          <label> Program(s) of Interest: </label>
-                          <input type="text"
-                                 className="form-control"
-                                 value={this.state.programOfInterest}
-                                 onChange={this.onChangeProgramOfInterest }
-                                 />
-                     </div>
-                  <div className="form-group">
-                      <input type="submit" value="Search" className="btn btn-primary" />
-                  </div>
-              </form>
+                <form onSubmit={this.onSubmit}>
+                   <div className = "form-group">
+                        <label> Zip Code: </label>
+                        <input type="number"
+                               className="form-control"
+                               value={this.state.zipCode}
+                               onChange={this.onChangeZipCode}
+                               />
+                   </div>
+                   <h3>What Cost of Living Level Would You Prefer?</h3>
+                      <div className = "form-group">
+                           <label> U.S. Average is 100 </label>
+                           <input type="number"
+                                  className="form-control"
+                                  value={this.state.costOfLivingIndex}
+                                  onChange={this.onChangeCostOfLivingIndex}
+                                  />
+                      </div>
+                      <h3>What Academic Program(s) are You Interested In?</h3>
+                         <div className = "form-group">
+                              <label> Program(s) of Interest: </label>
+                              <input type="text"
+                                     className="form-control"
+                                     value={this.state.programOfInterest}
+                                     onChange={this.onChangeProgramOfInterest}
+                                     />
+                         </div>
+                      <div className="form-group">
+                          <input type="submit" value="Search" className="btn btn-primary" />
+                      </div>
+                  </form>
+            </div>
         </div>
       )
   }

@@ -1,5 +1,6 @@
 import React, {Component } from 'react';
 import axios from 'axios';
+import NavigationBar from "./navigationBar.component";
 
 const School = props => (
     <tr>
@@ -59,7 +60,6 @@ export default class SchoolRecommenderSearchResults extends Component {
                   zipCode: this.props.location.state.zipCode,
                   costOfLivingIndex: this.props.location.state.costOfLivingIndex,
                   programOfInterest: this.props.location.state.programOfInterest,
-                  schools: this.state.schools
         }
 
         axios.post('http://localhost:4000/savedSearches/add', newSchoolRecommenderSearchResult)
@@ -78,29 +78,32 @@ export default class SchoolRecommenderSearchResults extends Component {
 
 render() {
   return (
-      <div>
-          <h3>Search Results
-          <form onSubmit={this.onSubmit}>
-              <div className="form-group">
-                  <input type="submit" value="Save Search" className="btn btn-primary" />
-              </div>
-          </form>
-          </h3>
-          <table className="table table-striped" style={{marginTop: 20}}>
-              <thead>
-                <tr>
-                    <th>School Name</th>
-                    <th>Website</th>
-                    <th>Zip Code</th>
-                    <th>Cost of Living Index</th>
-                    <th>State</th>
-                    <th>Program(s) Offered</th>
-                </tr>
-              </thead>
-              <tbody>
-                  {this.schoolList()}
-              </tbody>
-          </table>
+    <div>
+    {<NavigationBar/>}
+        <div>
+            <h3>Search Results
+            <form onSubmit={this.onSubmit}>
+                <div className="form-group">
+                    <input type="submit" value="Save Search" className="btn btn-primary" />
+                </div>
+            </form>
+            </h3>
+            <table className="table table-striped" style={{marginTop: 20}}>
+                <thead>
+                  <tr>
+                      <th>School Name</th>
+                      <th>Website</th>
+                      <th>Zip Code</th>
+                      <th>Cost of Living Index</th>
+                      <th>State</th>
+                      <th>Program(s) Offered</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    {this.schoolList()}
+                </tbody>
+            </table>
+        </div>
       </div>
   )
   }

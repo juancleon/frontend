@@ -1,6 +1,7 @@
 import React, {Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import NavigationBar from "./navigationBar.component";
 
 const Application = props => (
     <tr>
@@ -59,19 +60,22 @@ export default class Applications extends Component {
 
     render() {
         return (
+          <div>
+          {<NavigationBar/>}
             <div>
-                <h3>Applications List</h3>
-                <table className="table table-striped" style={{marginTop: 20}}>
-                    <thead>
-                        <tr>
-                            <th>School</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {this.applicationList()}
-                    </tbody>
-                </table>
+                  <h3>Applications List</h3>
+                  <table className="table table-striped" style={{marginTop: 20}}>
+                      <thead>
+                          <tr>
+                              <th>School</th>
+                              <th>Status</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          {this.applicationList()}
+                      </tbody>
+                  </table>
+              </div>
             </div>
         )
   }

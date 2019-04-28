@@ -104,7 +104,7 @@ export default class Register extends Component {
                           eMail: ''
                         });
                         alert('You have successfully registered.');
-                        this.props.history.push('/');
+                        this.props.history.push('/login');
                     }).catch(error => {
                           this.setState({
                             userName: ''

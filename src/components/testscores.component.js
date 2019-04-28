@@ -1,6 +1,7 @@
 import React, {Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import NavigationBar from "./navigationBar.component";
 
 const TestScore = props => (
     <tr>
@@ -58,20 +59,23 @@ export default class TestScores extends Component {
 
   render() {
       return (
-          <div>
-          <h3> Test Scores List</h3>
-          <table className="table table-striped" style={{marginTop: 20}}>
-              <thead>
-                  <tr>
-                      <th>Test Type</th>
-                      <th>Math Score</th>
-                      <th>Verbal Score</th>
-                  </tr>
-              </thead>
-              <tbody>
-                  {this.testScoreList()}
-              </tbody>
-          </table>
+            <div>
+            {<NavigationBar/>}
+              <div>
+              <h3> Test Scores List</h3>
+              <table className="table table-striped" style={{marginTop: 20}}>
+                  <thead>
+                      <tr>
+                          <th>Test Type</th>
+                          <th>Math Score</th>
+                          <th>Verbal Score</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      {this.testScoreList()}
+                  </tbody>
+              </table>
+              </div>
           </div>
       )
   }

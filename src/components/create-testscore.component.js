@@ -1,5 +1,6 @@
 import React, {Component } from 'react';
 import axios from 'axios';
+import NavigationBar from "./navigationBar.component";
 
 export default class CreateTestScore extends Component {
 
@@ -58,6 +59,8 @@ export default class CreateTestScore extends Component {
               mathScore: '',
               verbalScore: ''
             })
+
+            alert('Test score submitted successfully.');
       }
       else{
           alert('One of the test scores entered was outside of the valid range. Please re-enter the score(s).');
@@ -66,41 +69,44 @@ export default class CreateTestScore extends Component {
 
   render() {
       return (
-          <div style = {{marginTop: 20}}>
-              <h3>Create Test Type</h3>
-              <form onSubmit={this.onSubmit}>
-                 <div className = "form-group">
-                      <label> Test: </label>
-                      <input type="text"
-                             className="form-control"
-                             value={this.state.testType}
-                             onChange={this.onChangeTestType}
-                             />
-                 </div>
-                 <h3>Create Math Test Score</h3>
-                    <div className = "form-group">
-                         <label> Math Score: </label>
-                         <input type="number"
-                                className="form-control"
-                                placeholder="Please enter a number between 0 - 1600"
-                                value={this.state.mathScore}
-                                onChange={this.onChangeMathScore}
-                                />
-                    </div>
-                    <h3>Create Verbal Test Score</h3>
-                       <div className = "form-group">
-                            <label> Verbal Score: </label>
-                            <input type="number"
-                                   className="form-control"
-                                   placeholder="Please enter a number between 0 - 1600"
-                                   value={this.state.verbalScore}
-                                   onChange={this.onChangeVerbalScore }
-                                   />
-                       </div>
-                    <div className="form-group">
-                        <input type="submit" value="Create Test Score" className="btn btn-primary" />
-                    </div>
-                </form>
+        <div>
+        {<NavigationBar/>}
+            <div style = {{marginTop: 20}}>
+                <h3>Create Test Type</h3>
+                <form onSubmit={this.onSubmit}>
+                   <div className = "form-group">
+                        <label> Test: </label>
+                        <input type="text"
+                               className="form-control"
+                               value={this.state.testType}
+                               onChange={this.onChangeTestType}
+                               />
+                   </div>
+                   <h3>Create Math Test Score</h3>
+                      <div className = "form-group">
+                           <label> Math Score: </label>
+                           <input type="number"
+                                  className="form-control"
+                                  placeholder="Please enter a number between 0 - 1600"
+                                  value={this.state.mathScore}
+                                  onChange={this.onChangeMathScore}
+                                  />
+                      </div>
+                      <h3>Create Verbal Test Score</h3>
+                         <div className = "form-group">
+                              <label> Verbal Score: </label>
+                              <input type="number"
+                                     className="form-control"
+                                     placeholder="Please enter a number between 0 - 1600"
+                                     value={this.state.verbalScore}
+                                     onChange={this.onChangeVerbalScore }
+                                     />
+                         </div>
+                      <div className="form-group">
+                          <input type="submit" value="Create Test Score" className="btn btn-primary" />
+                      </div>
+                  </form>
+            </div>
           </div>
       )
   }
