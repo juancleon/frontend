@@ -87,16 +87,16 @@ export default class Register extends Component {
       }
 
       else{
-  
+
           const newUser = {
               userName: this.state.userName,
               password: this.state.firstPassword,
               eMail: this.state.eMail
           }
 
-          axios.post('http://localhost:4000/user/register', newUser)
+          axios.post('http://localhost:4000/register', newUser)
                   .then(res => {
-                    console.log(res.data.status);
+                    console.log(res.data);
                     this.setState({
                           userName: '',
                           firstPassword: '',
