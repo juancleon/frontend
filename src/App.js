@@ -14,12 +14,9 @@ import SchoolRecommender from "./components/school-recommender.component";
 import SavedSearches from "./components/saved-searches.component";
 import Register from "./components/register.component";
 import Login from "./components/login.component";
+import NavigationBar from "./components/navigationBar.component";
 
 //npm install axios
-
-{/*import CreateTodo from "./components/create-todo.component";
-import EditTodo from "./components/edit-todo.component";
-import TodosList from "./components/todos-list.component";*/}
 
 class App extends Component {
   render() {
@@ -27,15 +24,9 @@ class App extends Component {
       <Router>
         <div className="container">
 
-        <nav className = "navbar navbar-expand-lg navbar-light bg-light">
+        {/*}<nav className = "navbar navbar-expand-lg navbar-light bg-light">
             <div className = "collapse navbar-collapse">
               <ul className = "navbar-nav mr-auto">
-              {/*  <li className = "navbar-item">
-                  <Link to ="/" className = "nav-link">Todos</Link>
-                </li>
-                <li className = "navbar-item">
-                  <Link to ="/create" className = "nav-link">Create ToDo</Link>
-                </li>*/}
                 <li className = "navbar-item">
                   <Link to ="/schoolRecommender" className = "nav-link">School Recommender</Link>
                 </li>
@@ -60,15 +51,15 @@ class App extends Component {
                 <li className = "navbar-item">
                   <Link to ="/" className = "nav-link">Login</Link>
                 </li>
+                <li className = "navbar-item">
+                  <Link to ="/navigationBar" className = "nav-link">Navigation Bar</Link>
+                </li>
               </ul>
             </div>
-          </nav>
+          </nav>*/}
 
 
           <h2>School Application Helper</h2>
-          {/*}<Route path="/" exact component={TodosList} />
-          <Route path="/edit/:id" component={EditTodo} />
-          <Route path="/create" component={CreateTodo} />*/}
           <Route path="/applications" component={Applications} />
           <Route path="/createApplication" component={CreateApplication} />
           <Route path="/editApplication/:id" component={EditApplication} />
@@ -82,6 +73,7 @@ class App extends Component {
           <Route path="/savedSearches" component={SavedSearches} />
           <Route path="/register" component={Register} />
           <Route path="/schoolRecommender" component={SchoolRecommender} />
+          <Route path="/navigationBar" component={NavigationBar} />
         </div>
       </Router>
     );
