@@ -12,6 +12,8 @@ import DeleteTestScore from "./components/delete-testscore.component";
 import SchoolRecommenderSearchResults from "./components/school-recommender-search-results.component";
 import SchoolRecommender from "./components/school-recommender.component";
 import SavedSearches from "./components/saved-searches.component";
+import Register from "./components/register.component";
+import Login from "./components/login.component";
 
 //npm install axios
 
@@ -35,7 +37,10 @@ class App extends Component {
                   <Link to ="/create" className = "nav-link">Create ToDo</Link>
                 </li>*/}
                 <li className = "navbar-item">
-                  <Link to ="/" className = "nav-link">School Recommender</Link>
+                  <Link to ="/schoolRecommender" className = "nav-link">School Recommender</Link>
+                </li>
+                <li className = "navbar-item">
+                  <Link to ="/savedSearches" className = "nav-link">Saved Searches</Link>
                 </li>
                 <li className = "navbar-item">
                   <Link to ="/applications" className = "nav-link">Applications</Link>
@@ -50,7 +55,10 @@ class App extends Component {
                   <Link to ="/createTestScore" className = "nav-link">Create Test Score</Link>
                 </li>
                 <li className = "navbar-item">
-                  <Link to ="/savedSearches" className = "nav-link">Saved Searches</Link>
+                  <Link to ="/register" className = "nav-link">Register</Link>
+                </li>
+                <li className = "navbar-item">
+                  <Link to ="/" className = "nav-link">Login</Link>
                 </li>
               </ul>
             </div>
@@ -69,9 +77,11 @@ class App extends Component {
           <Route path="/createTestScore" component={CreateTestScore} />
           <Route path="/editTestScore/:id" component={EditTestScore} />
           <Route path="/deleteTestScore/:id" component={DeleteTestScore} />
-          <Route path="/" exact component={SchoolRecommender} />
+          <Route path="/" exact component={Login} />
           <Route path="/searchResults" component={SchoolRecommenderSearchResults} />
           <Route path="/savedSearches" component={SavedSearches} />
+          <Route path="/register" component={Register} />
+          <Route path="/schoolRecommender" component={SchoolRecommender} />
         </div>
       </Router>
     );
