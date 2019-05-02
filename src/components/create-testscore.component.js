@@ -50,8 +50,22 @@ export default class CreateTestScore extends Component {
           mathScore: this.state.mathScore,
           verbalScore: this.state.verbalScore
       }
-      if ((0 <= this.state.mathScore) && (this.state.mathScore <= 1600) && (0 <= this.state.verbalScore) && (this.state.verbalScore <= 1600))
+
+      if (((this.state.mathScore <= 0) || (1600 <= this.state.mathScore)))
       {
+        alert('The math score entered is outside of the valid range. Please re-enter the score.');
+        this.setState({
+          mathScore: ''
+        })
+      }
+      else if (((this.state.verbalScore <= 0) || (1600 <= this.state.verbalScore)))
+      {
+        alert('The verbal score entered is outside of the valid range. Please re-enter the score.');
+        this.setState({
+          verbalScore: ''
+        })
+      }
+      else {
         axios.post('http://localhost:4000/testScores/add', newTestScore)
             .then(res => console.log(res.data));
             this.setState({
@@ -61,9 +75,6 @@ export default class CreateTestScore extends Component {
             })
 
             alert('Test score submitted successfully.');
-      }
-      else{
-          alert('One of the test scores entered was outside of the valid range. Please re-enter the score(s).');
       }
 }
 

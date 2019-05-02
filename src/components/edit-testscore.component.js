@@ -56,9 +56,28 @@ export default class EditTestScore extends Component {
           mathScore: this.state.mathScore,
           verbalScore: this.state.verbalScore
       };
-      axios.post('http://localhost:4000/testScores/update/' + this.props.match.params.id, obj)
-          .then(res => console.log(res.data));
-      this.props.history.push('/testScores');
+
+      if (((this.state.mathScore <= 0) || (1600 <= this.state.mathScore)))
+      {
+        alert('The math score entered is outside of the valid range. Please re-enter the score.');
+        this.setState({
+          mathScore: ''
+        })
+      }
+      else if (((this.state.verbalScore <= 0) || (1600 <= this.state.verbalScore)))
+      {
+        alert('The verbal score entered is outside of the valid range. Please re-enter the score.');
+        this.setState({
+          verbalScore: ''
+        })
+      }
+      else
+      {
+        axios.post('http://localhost:4000/testScores/update/' + this.props.match.params.id, obj)
+            .then(res => console.log(res.data));
+        this.props.history.push('/testScores');
+        alert('Test score updated successfully.');
+      }
   }
 
 
