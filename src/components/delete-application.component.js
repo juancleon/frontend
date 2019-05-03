@@ -9,17 +9,35 @@ export default class DeleteApplication extends Component {
 
       this.state = {
           school: '',
-          status: ''
+          status: '',
+          dueDate: Date,
+          displayDate: '',
+          currentDate: Date
       }
   }
 
   componentDidMount(){
       axios.get('http://localhost:4000/applications/'+this.props.match.params.id)
           .then(response => {
+            if (response.data.dueDate == null)
+            {
               this.setState({
                   school: response.data.school,
-                  status: response.data.status
+                  status: response.data.status,
+                  dueDate: Date,
+                  displayDate: '',
+                  currentDate: Date,
               })
+            }
+            else {
+              this.setState({
+                  school: response.data.school,
+                  status: response.data.status,
+                  dueDate: response.data.dueDate.substring(0, 10),
+                  displayDate: response.data.displayDate,
+                  currentDate: response.data.currentDate,
+              })
+            }
           })
           .catch(function(error){
               console.log(error)
@@ -42,12 +60,14 @@ export default class DeleteApplication extends Component {
                     <tr>
                         <th>School</th>
                         <th>Status</th>
+                        <th>Due Date</th>
                     </tr>
                 </thead>
                   <tbody>
                     <tr>
                       <td>{this.state.school} </td>
                       <td>{this.state.status} </td>
+                      <td>{this.state.displayDate} </td>
                     </tr>
                   </tbody>
                 </table>
