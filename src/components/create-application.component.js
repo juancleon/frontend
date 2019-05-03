@@ -9,11 +9,15 @@ export default class CreateApplication extends Component {
 
       this.onChangeSchool = this.onChangeSchool.bind(this);
       this.onChangeStatus = this.onChangeStatus.bind(this);
+      this.onChangedueDate = this.onChangedueDate.bind(this);
       this.onSubmit = this.onSubmit.bind(this);
 
       this.state = {
           school: '',
-          status: ''
+          status: '',
+          dueDate: Date,
+          displayDate: '',
+          currentDate: Date
       }
   }
 
@@ -29,6 +33,13 @@ export default class CreateApplication extends Component {
       });
   }
 
+  onChangedueDate(e){
+      this.setState({
+          dueDate: e.target.value
+      });
+  }
+
+
   onSubmit(e){
       e.preventDefault();
 
@@ -36,19 +47,40 @@ export default class CreateApplication extends Component {
       console.log(`School: ${this.state.school}`);
       console.log(`Status: ${this.state.status}`);
 
-      const newApplication = {
-          school: this.state.school,
-          status: this.state.status
-      }
+      if (Object.keys(this.state.dueDate).length == 0)
+      {
+        const newApplication = {
+            school: this.state.school,
+            status: this.state.status,
+            dueDate: this.state.dueDate,
+            displayDate: '',
+            currentDate: Date.now()
+        }
 
-      axios.post('http://localhost:4000/applications/add', newApplication)
-          .then(res => console.log(res.data));
+        axios.post('http://localhost:4000/applications/add', newApplication)
+            .then(res => console.log(res.data));
+      }
+      else {
+        const newApplication = {
+            school: this.state.school,
+            status: this.state.status,
+            dueDate: this.state.dueDate,
+            displayDate: this.state.dueDate.substring(0, 10),
+            currentDate: Date.now()
+        }
+
+        axios.post('http://localhost:4000/applications/add', newApplication)
+            .then(res => console.log(res.data));
+      }
 
       alert('Application submitted successfully.');
 
       this.setState({
         school: '',
         status: '',
+        dueDate: Date,
+        displayDate: '',
+        currentDate: Date
       })
   }
 
@@ -67,7 +99,27 @@ export default class CreateApplication extends Component {
                                  onChange={this.onChangeSchool}
                                  />
                       </div>
+                      <div className = "form-group">
+                           <label> Due Date: </label>
+                           <input type="text"
+                                  className="form-control"
+                                  placeholder="Please enter a date in the format YYYY-MM-DD"
+                                  value={this.state.dueDate}
+                                  onChange={this.onChangedueDate}
+                                  />
+                       </div>
                       <div className="form-group">
+                      <div className="form-check form-check-inline">
+                              <input className="form-check-input"
+                                     type="radio"
+                                     name="applicationOptions"
+                                     id="unsubmittedStatus"
+                                     value="unsubmitted"
+                                     checked={this.state.status==='unsubmitted'}
+                                     onChange={this.onChangeStatus}
+                                     />
+                              <label className="form-check-label">Unsubmitted</label>
+                        </div>
                           <div className="form-check form-check-inline">
                               <input className="form-check-input"
                                      type="radio"

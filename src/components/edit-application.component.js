@@ -1,27 +1,48 @@
 import React, {Component } from 'react';
 import axios from 'axios';
+import NavigationBar from "./navigationBar.component";
 
 export default class EditApplication extends Component {
+
   constructor(props) {
       super(props);
 
       this.onChangeSchool = this.onChangeSchool.bind(this);
       this.onChangeStatus = this.onChangeStatus.bind(this);
+      this.onChangedueDate = this.onChangedueDate.bind(this);
       this.onSubmit = this.onSubmit.bind(this);
 
       this.state = {
           school: '',
-          status: ''
+          status: '',
+          dueDate: Date,
+          displayDate: '',
+          currentDate: Date
       }
   }
 
   componentDidMount(){
       axios.get('http://localhost:4000/applications/'+this.props.match.params.id)
           .then(response => {
+            if (response.data.dueDate == null)
+            {
               this.setState({
                   school: response.data.school,
-                  status: response.data.status
+                  status: response.data.status,
+                  dueDate: Date,
+                  displayDate: '',
+                  currentDate: Date,
               })
+            }
+            else {
+              this.setState({
+                  school: response.data.school,
+                  status: response.data.status,
+                  dueDate: response.data.dueDate.substring(0, 10),
+                  displayDate: response.data.displayDate,
+                  currentDate: response.data.currentDate,
+              })
+            }
           })
           .catch(function(error){
               console.log(error)
@@ -40,20 +61,55 @@ export default class EditApplication extends Component {
     });
   }
 
+  onChangedueDate(e){
+      this.setState({
+          dueDate: e.target.value
+      });
+  }
+
   onSubmit(e) {
       e.preventDefault();
-      const obj = {
-          school: this.state.school,
-          status: this.state.status
-      };
-      axios.post('http://localhost:4000/applications/update/' + this.props.match.params.id, obj)
+      if (Object.keys(this.state.dueDate).length == 0)
+      {
+        const obj = {
+            school: this.state.school,
+            status: this.state.status,
+            dueDate: this.state.dueDate,
+            displayDate: '',
+            currentDate: Date.now()
+        }
+
+        axios.post('http://localhost:4000/applications/update/' + this.props.match.params.id, obj)
           .then(res => console.log(res.data));
+      }
+      else {
+        const obj = {
+            school: this.state.school,
+            status: this.state.status,
+            dueDate: this.state.dueDate,
+            displayDate: this.state.dueDate.substring(0, 10),
+            currentDate: Date.now()
+        }
+
+        axios.post('http://localhost:4000/applications/update/' + this.props.match.params.id, obj)
+          .then(res => console.log(res.data));
+      }
+      alert('Application updated successfully.');
+
+      this.setState({
+        school: '',
+        status: '',
+        dueDate: Date,
+        displayDate: '',
+        currentDate: Date
+      })
       this.props.history.push('/applications');
   }
 
   render() {
       return (
           <div>
+          {<NavigationBar/>}
               <h3>Update Application</h3>
               <form onSubmit={this.onSubmit}>
                   <div className="form-group">
@@ -64,8 +120,28 @@ export default class EditApplication extends Component {
                               onChange={this.onChangeSchool}
                               />
                   </div>
-                  <div className="form-group">
-                      <div className="form-check form-check-inline">
+                  <div className = "form-group">
+                       <label> Due Date: </label>
+                       <input type="text"
+                              className="form-control"
+                              placeholder="Please enter a date in the format YYYY-MM-DD"
+                              value={this.state.dueDate}
+                              onChange={this.onChangedueDate}
+                              />
+                   </div>
+                   <div className="form-group">
+                   <div className="form-check form-check-inline">
+                           <input className="form-check-input"
+                                  type="radio"
+                                  name="applicationOptions"
+                                  id="unsubmittedStatus"
+                                  value="unsubmitted"
+                                  checked={this.state.status==='unsubmitted'}
+                                  onChange={this.onChangeStatus}
+                                  />
+                           <label className="form-check-label">Unsubmitted</label>
+                     </div>
+                     <div className="form-check form-check-inline">
                           <input className="form-check-input"
                                  type="radio"
                                  name="applicationOptions"
