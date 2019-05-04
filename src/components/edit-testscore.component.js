@@ -5,26 +5,47 @@ export default class EditTestScore extends Component {
   constructor(props){
       super(props);
 
-      this.onChangeTestType = this.onChangeTestType.bind(this);//left off here
+      this.onChangeTestType = this.onChangeTestType.bind(this);
       this.onChangeMathScore = this.onChangeMathScore.bind(this);
       this.onChangeVerbalScore = this.onChangeVerbalScore.bind(this);
+      this.onChangeDateTaken = this.onChangeDateTaken.bind(this);
       this.onSubmit = this.onSubmit.bind(this);
 
       this.state = {
           testType: '',
           mathScore: '',
-          verbalScore: ''
+          verbalScore: '',
+          dateTaken: Date,
+          displayDate: '',
+          currentDate: Date
       }
   }
 
   componentDidMount(){
       axios.get('http://localhost:4000/testScores/'+this.props.match.params.id)
           .then(response => {
+            if (response.data.dateTaken == null)
+            {
               this.setState({
                   testType: response.data.testType,
                   mathScore: response.data.mathScore,
                   verbalScore: response.data.verbalScore,
+                  dateTaken: Date,
+                  displayDate: '',
+                  currentDate: Date.now()
               })
+            }
+            else {
+              this.setState({
+                  testType: response.data.testType,
+                  mathScore: response.data.mathScore,
+                  verbalScore: response.data.verbalScore,
+                  dateTaken: response.data.dateTaken.substring(0, 10),
+                  displayDate: response.data.displayDate,
+                  currentDate: Date.now()
+              })
+            }
+
           })
           .catch(function(error){
               console.log(error)
@@ -49,13 +70,14 @@ export default class EditTestScore extends Component {
     });
   }
 
+  onChangeDateTaken(e){
+      this.setState({
+          dateTaken: e.target.value
+      });
+  }
+
   onSubmit(e) {
       e.preventDefault();
-      const obj = {
-          testType: this.state.testType,
-          mathScore: this.state.mathScore,
-          verbalScore: this.state.verbalScore
-      };
 
       if (((this.state.mathScore <= 0) || (1600 <= this.state.mathScore)))
       {
@@ -71,20 +93,51 @@ export default class EditTestScore extends Component {
           verbalScore: ''
         })
       }
-      else
+      else if (Object.keys(this.state.dateTaken).length == 0)
       {
-        axios.post('http://localhost:4000/testScores/update/' + this.props.match.params.id, obj)
+            const obj = {
+                testType: this.state.testType,
+                mathScore: this.state.mathScore,
+                verbalScore: this.state.verbalScore,
+                dateTaken: this.state.dateTaken,
+                displayDate: '',
+                currentDate: Date.now()
+          }
+
+          axios.post('http://localhost:4000/testScores/update/' + this.props.match.params.id, obj)
             .then(res => console.log(res.data));
-        this.props.history.push('/testScores');
-        alert('Test score updated successfully.');
       }
+      else {
+            const obj = {
+              testType: this.state.testType,
+              mathScore: this.state.mathScore,
+              verbalScore: this.state.verbalScore,
+              dateTaken: this.state.dateTaken,
+              displayDate: this.state.dateTaken.substring(0, 10),
+              currentDate: Date.now()
+            }
+
+        axios.post('http://localhost:4000/testScores/update/' + this.props.match.params.id, obj)
+          .then(res => console.log(res.data));
+      }
+      alert('Test score updated successfully.');
+
+      this.setState({
+        testType: '',
+        mathScore: '',
+        verbalScore: '',
+        dateTaken: Date,
+        displayDate: '',
+        currentDate: Date
+      })
+      this.props.history.push('/testScores');
   }
 
 
   render() {
       return (
         <div style = {{marginTop: 20}}>
-            <h3>Update Test Type</h3>
+            <h3>Update Test Score</h3>
             <form onSubmit={this.onSubmit}>
                <div className = "form-group">
                     <label> Test: </label>
@@ -94,8 +147,7 @@ export default class EditTestScore extends Component {
                            onChange={this.onChangeTestType}
                            />
                </div>
-               <h3>Update Math Test Score</h3>
-                  <div className = "form-group">
+               <div className = "form-group">
                        <label> Math Score: </label>
                        <input type="text"
                               className="form-control"
@@ -103,8 +155,7 @@ export default class EditTestScore extends Component {
                               onChange={this.onChangeMathScore}
                               />
                   </div>
-                  <h3>Update Verbal Test Score</h3>
-                     <div className = "form-group">
+                  <div className = "form-group">
                           <label> Verbal Score: </label>
                           <input type="text"
                                  className="form-control"
@@ -112,6 +163,15 @@ export default class EditTestScore extends Component {
                                  onChange={this.onChangeVerbalScore }
                                  />
                      </div>
+                     <div className = "form-group">
+                          <label>Date Taken: </label>
+                          <input type="text"
+                                 className="form-control"
+                                 placeholder="Please enter a date in the format YYYY-MM-DD"
+                                 value={this.state.dateTaken}
+                                 onChange={this.onChangeDateTaken}
+                                 />
+                      </div>
                   <div className="form-group">
                       <input type="submit" value="Update Test Score" className="btn btn-primary" />
                   </div>
