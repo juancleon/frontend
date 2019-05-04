@@ -8,6 +8,7 @@ const TestScore = props => (
         <td>{props.testScore.testType} </td>
         <td>{props.testScore.mathScore} </td>
         <td>{props.testScore.verbalScore} </td>
+        <td>{props.testScore.displayDate} </td>
         <td>
             <Link to={'/editTestScore/'+props.testScore._id}>Edit</Link>
         </td>
@@ -69,6 +70,7 @@ export default class TestScores extends Component {
                           <th>Test Type</th>
                           <th>Math Score</th>
                           <th>Verbal Score</th>
+                          <th>Date Taken</th>
                       </tr>
                   </thead>
                   <tbody>
