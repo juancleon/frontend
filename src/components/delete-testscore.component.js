@@ -10,18 +10,37 @@ export default class DeleteTestScore extends Component {
       this.state = {
           testType: '',
           mathScore: '',
-          verbalScore: ''
+          verbalScore: '',
+          dateTaken: Date,
+          displayDate: '',
+          currentDate: Date
       }
   }
 
   componentDidMount(){
       axios.get('http://localhost:4000/testScores/'+this.props.match.params.id)
           .then(response => {
-              this.setState({
-                testType: response.data.testType,
-                mathScore: response.data.mathScore,
-                verbalScore: response.data.verbalScore,
-              })
+                if (response.data.dateTaken == null)
+                {
+                  this.setState({
+                      testType: response.data.testType,
+                      mathScore: response.data.mathScore,
+                      verbalScore: response.data.verbalScore,
+                      dateTaken: Date,
+                      displayDate: '',
+                      currentDate: Date
+                  })
+            }
+                else {
+                  this.setState({
+                    testType: response.data.testType,
+                    mathScore: response.data.mathScore,
+                    verbalScore: response.data.verbalScore,
+                    dateTaken: response.data.dateTaken.substring(0, 10),
+                    displayDate: response.data.displayDate,
+                    currentDate: response.data.currentDate,
+                  })
+                }
           })
           .catch(function(error){
               console.log(error)
@@ -45,6 +64,7 @@ export default class DeleteTestScore extends Component {
                         <th>Test Type</th>
                         <th>Math Score</th>
                         <th>Verbal Score</th>
+                        <th>Date Taken</th>
                     </tr>
                 </thead>
                   <tbody>
@@ -52,6 +72,7 @@ export default class DeleteTestScore extends Component {
                       <td>{this.state.testType} </td>
                       <td>{this.state.mathScore} </td>
                       <td>{this.state.verbalScore} </td>
+                      <td>{this.state.displayDate} </td>
                     </tr>
                   </tbody>
                 </table>
