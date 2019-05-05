@@ -7,6 +7,8 @@ const Application = props => (
     <tr>
         <td>{props.application.school} </td>
         <td>{props.application.status} </td>
+        <td>{props.application.displayDate} </td>
+        <td>{props.application.timeLeft} </td>
         <td>
             <Link to={"/editApplication/"+props.application._id}>Edit</Link>
         </td>
@@ -69,6 +71,8 @@ export default class Applications extends Component {
                           <tr>
                               <th>School</th>
                               <th>Status</th>
+                              <th>Due Date</th>
+                              <th>Time Left (Days)</th>
                           </tr>
                       </thead>
                       <tbody>

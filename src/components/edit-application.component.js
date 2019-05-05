@@ -17,7 +17,8 @@ export default class EditApplication extends Component {
           status: '',
           dueDate: Date,
           displayDate: '',
-          currentDate: Date
+          currentDate: Date.now(),
+          timeLeft: ''
       }
   }
 
@@ -30,8 +31,9 @@ export default class EditApplication extends Component {
                   school: response.data.school,
                   status: response.data.status,
                   dueDate: Date,
+                  currentDate: Date.now(),
                   displayDate: '',
-                  currentDate: Date,
+                  timeLeft: ''
               })
             }
             else {
@@ -40,7 +42,8 @@ export default class EditApplication extends Component {
                   status: response.data.status,
                   dueDate: response.data.dueDate.substring(0, 10),
                   displayDate: response.data.displayDate,
-                  currentDate: response.data.currentDate,
+                  currentDate: Date.now(),
+                  timeLeft: ''
               })
             }
           })
@@ -76,21 +79,23 @@ export default class EditApplication extends Component {
             status: this.state.status,
             dueDate: this.state.dueDate,
             displayDate: '',
-            currentDate: Date.now()
+            currentDate: Date.now(),
+            timeLeft: ''
         }
 
         axios.post('http://localhost:4000/applications/update/' + this.props.match.params.id, obj)
           .then(res => console.log(res.data));
       }
       else {
+        console.log(`timeLeft: ${this.state.timeLeft}`);
         const obj = {
             school: this.state.school,
             status: this.state.status,
             dueDate: this.state.dueDate,
             displayDate: this.state.dueDate.substring(0, 10),
-            currentDate: Date.now()
+            currentDate: Date.now(),
+            timeLeft: ''
         }
-
         axios.post('http://localhost:4000/applications/update/' + this.props.match.params.id, obj)
           .then(res => console.log(res.data));
       }
@@ -101,7 +106,8 @@ export default class EditApplication extends Component {
         status: '',
         dueDate: Date,
         displayDate: '',
-        currentDate: Date
+        currentDate: Date.now(),
+        timeLeft: ''
       })
       this.props.history.push('/applications');
   }

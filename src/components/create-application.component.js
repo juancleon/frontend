@@ -17,7 +17,8 @@ export default class CreateApplication extends Component {
           status: '',
           dueDate: Date,
           displayDate: '',
-          currentDate: Date
+          currentDate: Date.now(),
+          timeLeft: ''
       }
   }
 
@@ -46,15 +47,17 @@ export default class CreateApplication extends Component {
       console.log(`Form submitted:`);
       console.log(`School: ${this.state.school}`);
       console.log(`Status: ${this.state.status}`);
+      console.log(`Due Date: ${this.state.dueDate}`);
 
       if (Object.keys(this.state.dueDate).length == 0)
       {
         const newApplication = {
             school: this.state.school,
             status: this.state.status,
-            dueDate: this.state.dueDate,
+            dueDate: null,
             displayDate: '',
-            currentDate: Date.now()
+            currentDate: Date.now(),
+            timeLeft: ''
         }
 
         axios.post('http://localhost:4000/applications/add', newApplication)
@@ -66,7 +69,8 @@ export default class CreateApplication extends Component {
             status: this.state.status,
             dueDate: this.state.dueDate,
             displayDate: this.state.dueDate.substring(0, 10),
-            currentDate: Date.now()
+            currentDate: Date.now(),
+            timeLeft: ''
         }
 
         axios.post('http://localhost:4000/applications/add', newApplication)
@@ -80,7 +84,8 @@ export default class CreateApplication extends Component {
         status: '',
         dueDate: Date,
         displayDate: '',
-        currentDate: Date
+        currentDate: Date.now(),
+        timeLeft: ''
       })
   }
 
