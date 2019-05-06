@@ -13,7 +13,8 @@ export default class DeleteTestScore extends Component {
           verbalScore: '',
           dateTaken: Date,
           displayDate: '',
-          currentDate: Date
+          currentDate: Date.now(),
+          timeSinceTaken: ''
       }
   }
 
@@ -28,7 +29,8 @@ export default class DeleteTestScore extends Component {
                       verbalScore: response.data.verbalScore,
                       dateTaken: Date,
                       displayDate: '',
-                      currentDate: Date
+                      currentDate: Date.now(),
+                      timeSinceTaken: ''
                   })
             }
                 else {
@@ -38,7 +40,8 @@ export default class DeleteTestScore extends Component {
                     verbalScore: response.data.verbalScore,
                     dateTaken: response.data.dateTaken.substring(0, 10),
                     displayDate: response.data.displayDate,
-                    currentDate: response.data.currentDate,
+                    currentDate: Date.now(),
+                    timeSinceTaken: this.props.location.state.timeSinceTaken
                   })
                 }
           })
@@ -65,6 +68,7 @@ export default class DeleteTestScore extends Component {
                         <th>Math Score</th>
                         <th>Verbal Score</th>
                         <th>Date Taken</th>
+                        <th>Time Since Taken (Days)</th>
                     </tr>
                 </thead>
                   <tbody>
@@ -73,6 +77,7 @@ export default class DeleteTestScore extends Component {
                       <td>{this.state.mathScore} </td>
                       <td>{this.state.verbalScore} </td>
                       <td>{this.state.displayDate} </td>
+                      <td>{this.state.timeSinceTaken}</td>
                     </tr>
                   </tbody>
                 </table>

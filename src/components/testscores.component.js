@@ -9,14 +9,19 @@ const TestScore = props => (
         <td>{props.testScore.mathScore} </td>
         <td>{props.testScore.verbalScore} </td>
         <td>{props.testScore.displayDate} </td>
+        <td>{props.testScore.timeSinceTaken} </td>
         <td>
             <Link to={'/editTestScore/'+props.testScore._id}>Edit</Link>
         </td>
         <td>
-            <Link to={'/deleteTestScore/'+props.testScore._id}>Delete</Link>
+            <Link to={{
+                        pathname: '/deleteTestScore/'+props.testScore._id,
+                        state: {timeSinceTaken: props.testScore.timeSinceTaken}
+                      }}>Delete</Link>
         </td>
     </tr>
 )
+//<Link to={'/deleteTestScore/'+props.testScore._id}>Delete</Link>
 
 export default class TestScores extends Component {
   constructor(props) {
@@ -71,6 +76,7 @@ export default class TestScores extends Component {
                           <th>Math Score</th>
                           <th>Verbal Score</th>
                           <th>Date Taken</th>
+                          <th>Time Since Taken (Days)</th>
                       </tr>
                   </thead>
                   <tbody>

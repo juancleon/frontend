@@ -19,7 +19,8 @@ export default class CreateTestScore extends Component {
           verbalScore: '',
           dateTaken: Date,
           displayDate: '',
-          currentDate: Date
+          currentDate: Date,
+          timeSinceTaken: ''
       }
   }
 
@@ -69,15 +70,17 @@ export default class CreateTestScore extends Component {
           verbalScore: ''
         })
       }
-      else if (Object.keys(this.state.dateTaken).length == 0){
+      else if (Object.keys(this.state.dateTaken).length == 0)
+        {
 
             const newTestScore = {
                 testType: this.state.testType,
                 mathScore: this.state.mathScore,
                 verbalScore: this.state.verbalScore,
-                dateTaken: this.state.dateTaken,
+                dateTaken: null,
                 displayDate: '',
-                currentDate: Date.now()
+                currentDate: Date.now(),
+                timeSinceTaken: ''
             }
 
             axios.post('http://localhost:4000/testScores/add', newTestScore)
@@ -89,7 +92,8 @@ export default class CreateTestScore extends Component {
                   verbalScore: '',
                   dateTaken: Date,
                   displayDate: '',
-                  currentDate: Date
+                  currentDate: Date.now(),
+                  timeSinceTaken: ''
                 })
 
             alert('Test score submitted successfully.');
@@ -101,19 +105,21 @@ export default class CreateTestScore extends Component {
               verbalScore: this.state.verbalScore,
               dateTaken: this.state.dateTaken,
               displayDate: this.state.dateTaken.substring(0, 10),
-              currentDate: Date.now()
+              currentDate: Date.now(),
+              timeSinceTaken: ''
           }
 
           axios.post('http://localhost:4000/testScores/add', newTestScore)
               .then(res => console.log(res.data));
 
           this.setState({
-                testType: '',
-                mathScore: '',
-                verbalScore: '',
-                dateTaken: Date,
-                displayDate: '',
-                currentDate: Date
+                  testType: '',
+                  mathScore: '',
+                  verbalScore: '',
+                  dateTaken: Date,
+                  displayDate: '',
+                  currentDate: Date.now(),
+                  timeSinceTaken: ''
               })
 
             alert('Test score submitted successfully.');
@@ -150,7 +156,7 @@ export default class CreateTestScore extends Component {
                                      className="form-control"
                                      placeholder="Please enter a number between 0 - 1600"
                                      value={this.state.verbalScore}
-                                     onChange={this.onChangeVerbalScore }
+                                     onChange={this.onChangeVerbalScore}
                                      />
                          </div>
                          <div className = "form-group">

@@ -17,7 +17,8 @@ export default class EditTestScore extends Component {
           verbalScore: '',
           dateTaken: Date,
           displayDate: '',
-          currentDate: Date
+          currentDate: Date,
+          timeSinceTaken: ''
       }
   }
 
@@ -32,7 +33,8 @@ export default class EditTestScore extends Component {
                   verbalScore: response.data.verbalScore,
                   dateTaken: Date,
                   displayDate: '',
-                  currentDate: Date.now()
+                  currentDate: Date.now(),
+                  timeSinceTaken: ''
               })
             }
             else {
@@ -42,7 +44,8 @@ export default class EditTestScore extends Component {
                   verbalScore: response.data.verbalScore,
                   dateTaken: response.data.dateTaken.substring(0, 10),
                   displayDate: response.data.displayDate,
-                  currentDate: Date.now()
+                  currentDate: Date.now(),
+                  timeSinceTaken: ''
               })
             }
 
@@ -101,7 +104,8 @@ export default class EditTestScore extends Component {
                 verbalScore: this.state.verbalScore,
                 dateTaken: this.state.dateTaken,
                 displayDate: '',
-                currentDate: Date.now()
+                currentDate: Date.now(),
+                timeSinceTaken: ''
           }
 
           axios.post('http://localhost:4000/testScores/update/' + this.props.match.params.id, obj)
@@ -114,7 +118,8 @@ export default class EditTestScore extends Component {
               verbalScore: this.state.verbalScore,
               dateTaken: this.state.dateTaken,
               displayDate: this.state.dateTaken.substring(0, 10),
-              currentDate: Date.now()
+              currentDate: Date.now(),
+              timeSinceTaken: ''
             }
 
         axios.post('http://localhost:4000/testScores/update/' + this.props.match.params.id, obj)
@@ -128,7 +133,8 @@ export default class EditTestScore extends Component {
         verbalScore: '',
         dateTaken: Date,
         displayDate: '',
-        currentDate: Date
+        currentDate: Date.now(),
+        timeSinceTaken: ''
       })
       this.props.history.push('/testScores');
   }
