@@ -28,20 +28,25 @@ export default class Applications extends Component {
 
         this.onChangeSortCriteria = this.onChangeSortCriteria.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
+        this.onSubmitSearch = this.onSubmitSearch.bind(this);
+        this.onChangeSearchField = this.onChangeSearchField.bind(this);
+        this.onChangeSearchCriteria = this.onChangeSearchCriteria.bind(this);
 
         this.state = {applications: [],
           _isMounted: false,
           _callComponentDidUpdate: true,
-          sortCriteria: ''
+          sortCriteria: '',
+          searchField: '',
+          searchCriteria: ''
         }
     }
 
   componentDidMount() {
         this._isMounted = true;
-        console.log(`Is mounted inside componentDidMount: ${this.state._isMounted}`);
+        //console.log(`Is mounted inside componentDidMount: ${this.state._isMounted}`);
         axios.get('http://localhost:4000/applications')
             .then(response => {
-                this.setState({applications: response.data});
+              this.setState({applications: response.data});
             })
             .catch(function (error) {
                 console.log(error);
@@ -54,16 +59,17 @@ export default class Applications extends Component {
 
   componentDidUpdate() {
     axios.get('http://localhost:4000/applications')
-      .then(res => {
-          console.log(`Call component did update: ${this.state._callComponentDidUpdate}`);
-          console.log(`Is mounted: ${this.state._isMounted}`);
-          if(this._isMounted && this._callComponentDidUpdate) {
-          this.setState({applications: res.data});
-        }
-      })
-      .catch( error => {
-        console.log(error);
-      });
+        .then(res => {
+            console.log(`Call Component Did Update: ${this.state._callComponentDidUpdate}`);
+            console.log(`Is Mounted: ${this.state._isMounted}`);
+            //this._isMounted is returning false when the component mounts after sorting then editing
+            if(this._isMounted && this._callComponentDidUpdate) {
+            this.setState({applications: res.data});
+          }
+        })
+        .catch( error => {
+          console.log(error);
+        });
   }
 
     applicationList() {
@@ -78,28 +84,64 @@ export default class Applications extends Component {
         });
     }
 
+    onChangeSearchField(e){
+        this.setState({
+            searchField: e.target.value
+        });
+    }
+
+    onChangeSearchCriteria(e){
+        this.setState({
+            searchCriteria: e.target.value
+        });
+    }
+
     onSubmit(e) {
-          e.preventDefault();
+        e.preventDefault();
+
+        this.setState(prevState => ({
+            _callComponentDidUpdate: !prevState._callComponentDidUpdate
+        }));
+
+        axios.get('http://localhost:4000/sortApplications/' + this.state.sortCriteria)
+          .then(res => {
+              if(this._isMounted) {
+              this.setState({applications: res.data});
+              /*console.log(`Sort Criteria: ${this.state.sortCriteria}`);
+              console.log(`Call Component Did Update: ${this.state._callComponentDidUpdate}`);*/
+            }
+          })
+          .catch( error => {
+            console.log(error);
+          });
 
           this.setState(prevState => ({
               _callComponentDidUpdate: !prevState._callComponentDidUpdate
           }));
+    }
 
-          axios.get('http://localhost:4000/sortApplications/' + this.state.sortCriteria)
-            .then(res => {
-                if(this._isMounted) {
-                this.setState({applications: res.data});
-                /*console.log(`Sort Criteria: ${this.state.sortCriteria}`);
-                console.log(`Call Component Did Update: ${this.state._callComponentDidUpdate}`);*/
-              }
-            })
-            .catch( error => {
-              console.log(error);
-            });
+    onSubmitSearch(e) {
+        e.preventDefault();
 
-            this.setState(prevState => ({
-                _callComponentDidUpdate: !prevState._callComponentDidUpdate
-            }));
+        this.setState(prevState => ({
+            _callComponentDidUpdate: !prevState._callComponentDidUpdate
+        }));
+
+        axios.get('http://localhost:4000/searchApplications/' + this.state.searchField+ '/' + this.state.searchCriteria)
+          .then(res => {
+              if(this._isMounted) {
+              this.setState({applications: res.data});
+              /*console.log(`Sort Criteria: ${this.state.sortCriteria}`);
+              console.log(`Call Component Did Update: ${this.state._callComponentDidUpdate}`);*/
+            }
+          })
+          .catch( error => {
+            console.log(error);
+          });
+
+          this.setState(prevState => ({
+              _callComponentDidUpdate: !prevState._callComponentDidUpdate
+          }));
     }
 
     render() {
@@ -148,6 +190,57 @@ export default class Applications extends Component {
                               </div>
                         </div>
                   </form>
+
+                  <form onSubmit={this.onSubmitSearch}>
+                     <div className = "form-group">
+                        {/*  <label> Search: </label>*/}
+                          <input type="text"
+                                 className="form-control"
+                                 value={this.state.searchCriteria}
+                                 onChange={this.onChangeSearchCriteria}
+                                 />
+                    </div>
+
+                    <div className="form-group">
+                        <input type="submit" value="Search" className="btn btn-primary" />
+                  {/*</div>
+                      <div className="form-group">*/}
+                            <div className="form-check form-check-inline">
+                                  <input className="form-check-input"
+                                         type="radio"
+                                         name="searchOptions"
+                                         id="searchSchool"
+                                         value="school"
+                                         checked={this.state.searchField==='school'}
+                                         onChange={this.onChangeSearchField}
+                                         />
+                                  <label className="form-check-label">School</label>
+                            </div>
+                              <div className="form-check form-check-inline">
+                                  <input className="form-check-input"
+                                         type="radio"
+                                         name="searchOptions"
+                                         id="searchStatus"
+                                         value="status"
+                                         checked={this.state.searchField==='status'}
+                                         onChange={this.onChangeSearchField}
+                                         />
+                                  <label className="form-check-label">Status</label>
+                              </div>
+                              <div className="form-check form-check-inline">
+                                      <input className="form-check-input"
+                                             type="radio"
+                                             name="searchOptions"
+                                             id="searchDisplayDate"
+                                             value="displayDate"
+                                             checked={this.state.searchField==='displayDate'}
+                                             onChange={this.onChangeSearchField}
+                                             />
+                                      <label className="form-check-label">Due Date</label>
+                                </div>
+                            </div>
+                        </form>
+
                   <table className="table table-striped" style={{marginTop: 20}}>
                       <thead>
                           <tr>
