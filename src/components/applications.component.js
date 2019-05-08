@@ -60,11 +60,11 @@ export default class Applications extends Component {
   componentDidUpdate() {
     axios.get('http://localhost:4000/applications')
         .then(res => {
-            console.log(`Call Component Did Update: ${this.state._callComponentDidUpdate}`);
-            console.log(`Is Mounted: ${this.state._isMounted}`);
+            //console.log(`Call Component Did Update: ${this._callComponentDidUpdate}`);
+            //console.log(`Is Mounted: ${this._isMounted}`);
             //this._isMounted is returning false when the component mounts after sorting then editing
-            if(this._isMounted && this._callComponentDidUpdate) {
-            this.setState({applications: res.data});
+            if(this._isMounted) {
+              this.setState({applications: res.data});
           }
         })
         .catch( error => {
@@ -98,50 +98,53 @@ export default class Applications extends Component {
 
     onSubmit(e) {
         e.preventDefault();
-
-        this.setState(prevState => ({
+        //console.log(`Is mounted inside submit: ${this.state._isMounted}`);
+        //console.log(`Is mounted inside submit: ${this._isMounted}`);
+        this._isMounted = false;
+        /*this.setState(prevState => ({
             _callComponentDidUpdate: !prevState._callComponentDidUpdate
-        }));
+        }));*/
 
         axios.get('http://localhost:4000/sortApplications/' + this.state.sortCriteria)
           .then(res => {
-              if(this._isMounted) {
+
               this.setState({applications: res.data});
               /*console.log(`Sort Criteria: ${this.state.sortCriteria}`);
               console.log(`Call Component Did Update: ${this.state._callComponentDidUpdate}`);*/
-            }
+
           })
           .catch( error => {
             console.log(error);
           });
 
-          this.setState(prevState => ({
+          /*this.setState(prevState => ({
               _callComponentDidUpdate: !prevState._callComponentDidUpdate
-          }));
+          }));*/
+
     }
 
     onSubmitSearch(e) {
         e.preventDefault();
-
-        this.setState(prevState => ({
+        this._isMounted = false;
+        /*this.setState(prevState => ({
             _callComponentDidUpdate: !prevState._callComponentDidUpdate
-        }));
+        }));*/
 
         axios.get('http://localhost:4000/searchApplications/' + this.state.searchField+ '/' + this.state.searchCriteria)
           .then(res => {
-              if(this._isMounted) {
+
               this.setState({applications: res.data});
               /*console.log(`Sort Criteria: ${this.state.sortCriteria}`);
               console.log(`Call Component Did Update: ${this.state._callComponentDidUpdate}`);*/
-            }
+
           })
           .catch( error => {
             console.log(error);
           });
 
-          this.setState(prevState => ({
+          /*this.setState(prevState => ({
               _callComponentDidUpdate: !prevState._callComponentDidUpdate
-          }));
+          }));*/
     }
 
     render() {
