@@ -1,6 +1,6 @@
 import React, { Component } from 'react';//run development server with "npm start"
 import "bootstrap/dist/css/bootstrap.min.css";//npm install bootstrap
-import {BrowserRouter as Router, Route, Link} from "react-router-dom";//npm install react-router-dom
+import {BrowserRouter as Router, Route} from "react-router-dom";//npm install react-router-dom
 import Applications from "./components/applications.component";
 import CreateApplication from "./components/create-application.component";
 import EditApplication from "./components/edit-application.component";
@@ -12,19 +12,35 @@ import DeleteTestScore from "./components/delete-testscore.component";
 import SchoolRecommenderSearchResults from "./components/school-recommender-search-results.component";
 import SchoolRecommender from "./components/school-recommender.component";
 import SavedSearches from "./components/saved-searches.component";
+import DeleteSavedSearch from "./components/delete-savedSearch.component";
 import Register from "./components/register.component";
 import Login from "./components/login.component";
 import NavigationBar from "./components/navigationBar.component";
-
+import Calendar from "./components/calendar.component";
+import "./App.css";
 //npm install axios
 
 class App extends Component {
+
+  /*constructor(props) {
+    super(props);
+
+    this.state = { userName: ''
+    };
+  }
+
+  onUsernameChange = (userName) => {
+    this.setState({
+      userName: userName
+    });
+  }*/
+
   render() {
     return (
       <Router>
         <div className="container">
 
-        {/*}<nav className = "navbar navbar-expand-lg navbar-light bg-light">
+        {/*<nav className = "navbar navbar-expand-lg navbar-light bg-light">
             <div className = "collapse navbar-collapse">
               <ul className = "navbar-nav mr-auto">
                 <li className = "navbar-item">
@@ -68,12 +84,14 @@ class App extends Component {
           <Route path="/createTestScore" component={CreateTestScore} />
           <Route path="/editTestScore/:id" component={EditTestScore} />
           <Route path="/deleteTestScore/:id" component={DeleteTestScore} />
-          <Route path="/" exact component={Login} />
+          <Route path="/" exact component={Login}/>
           <Route path="/searchResults" component={SchoolRecommenderSearchResults} />
           <Route path="/savedSearches" component={SavedSearches} />
+          <Route path="/deleteSavedSearch/:id" component={DeleteSavedSearch} />
           <Route path="/register" component={Register} />
           <Route path="/schoolRecommender" component={SchoolRecommender} />
           <Route path="/navigationBar" component={NavigationBar} />
+          <Route path="/calendar" component={Calendar} />
         </div>
       </Router>
     );
