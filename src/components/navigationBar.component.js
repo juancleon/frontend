@@ -16,16 +16,19 @@ export default class NavigationBar extends Component {
                     <Link to ="/savedSearches" className = "nav-link">Saved Searches</Link>
                   </li>
                   <li className = "navbar-item">
+                    <Link to ="/createApplication" className = "nav-link">Create Application</Link>
+                  </li>
+                  <li className = "navbar-item">
                     <Link to ="/applications" className = "nav-link">Applications</Link>
                   </li>
                   <li className = "navbar-item">
-                    <Link to ="/createApplication" className = "nav-link">Create Application</Link>
+                    <Link to ="/createTestScore" className = "nav-link">Create Test Score</Link>
                   </li>
                   <li className = "navbar-item">
                     <Link to ="/testScores" className = "nav-link">Test Scores</Link>
                   </li>
                   <li className = "navbar-item">
-                    <Link to ="/createTestScore" className = "nav-link">Create Test Score</Link>
+                    <Link to ="/calendar" className = "nav-link">Calendar</Link>
                   </li>
                   <li className = "navbar-item">
                     <Link to ="/" className = "nav-link">Logout</Link>
