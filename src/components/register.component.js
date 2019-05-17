@@ -104,7 +104,7 @@ export default class Register extends Component {
                           eMail: ''
                         });
                         alert('You have successfully registered.');
-                        this.props.history.push('/login');
+                        this.props.history.push('/');
                     }).catch(error => {
                           this.setState({
                             userName: ''
@@ -130,7 +130,7 @@ export default class Register extends Component {
                   </div>
                   <div className = "form-group">
                        <label>Enter Password:</label>
-                       <input type="text"//change to "password" to mask text
+                       <input type="password"//change to "password" to mask text
                               className="form-control"
                               placeholder="Please enter a password"
                               value={this.state.firstPassword}
@@ -139,7 +139,7 @@ export default class Register extends Component {
                    </div>
                    <div className = "form-group">
                         <label>Confirm Password:</label>
-                        <input type="text"//change to "password" to mask text
+                        <input type="password"//change to "password" to mask text
                                className="form-control"
                                placeholder="Please re-enter the same password"
                                value={this.state.secondPassword}

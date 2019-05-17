@@ -1,6 +1,9 @@
 import React, {Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { withRouter } from "react-router";
+import SchoolRecommender from "./school-recommender.component";
+withRouter(SchoolRecommender);
 
 export default class Login extends Component {
 
@@ -17,6 +20,7 @@ export default class Login extends Component {
           databasePassword: ''
       }
   }
+
 
   onChangeUserName(e){
       this.setState({
@@ -55,15 +59,17 @@ export default class Login extends Component {
 
                 if(this.state.userEnteredPassword === this.state.databasePassword)
                 {
-                    this.props.history.push('/SchoolRecommender');
+                    this.props.history.push('/schoolRecommender');
                 }
-                else {
+                else
+                {
                     alert('The password entered is incorrect.');
                     this.setState({
                       userEnteredPassword: ''
                     });
                 }
             }).catch(error => {//didn't find user
+                console.log(error);
                 alert('The User Name entered was not found.');
                 this.setState({
                   userName: ''
@@ -89,7 +95,7 @@ export default class Login extends Component {
                  <h3>Password</h3>
                     <div className = "form-group">
                          <label> Enter password: </label>
-                         <input type="text"//change to "password" to mask text
+                         <input type="password"//change to "password" to mask text
                                 className="form-control"
                                 value={this.state.userEnteredPassword}
                                 onChange={this.onChangeUserEnteredPassword}
